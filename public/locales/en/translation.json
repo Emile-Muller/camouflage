@@ -1,0 +1,102 @@
+{
+  "playerSingular": "Player",
+  "playerPlural": "Players",
+  "authenticSingular": "Authentic",
+  "authenticPlural": "Authentics",
+  "maskSingular": "Mask",
+  "maskPlural": "Masks",
+  "chameleon": "Chameleon",
+  "authenticsAlive_one": "Authentic alive: <bold>{{count}}</bold>",
+  "authenticsAlive_other": "Authentics alive: <bold>{{count}}</bold>",
+  "masksAlive_one": "Mask alive: <bold>{{count}}</bold>",
+  "masksAlive_other": "Masks alive: <bold>{{count}}</bold>",
+  "aliveStatus": "Alive",
+  "eliminatedStatus": "Eliminated",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "continue": "Continue",
+  "roles": {
+    "authentic": "Authentic",
+    "mask": "Mask",
+    "chameleon": "Chameleon"
+  },
+  "homeScreenView": {
+    "gameTitle": "Camouflage",
+    "partyDeductionGame": "Party deduction game",
+    "authenticObjective": "Know the word. Find the Masks and the Chameleon.",
+    "maskObjective": "Know another word. Blend in.",
+    "chameleonObjective": "No word. Try to guess the word and blend in.",
+    "startGame": "Start game",
+    "editRules": "Edit rules",
+    "scoreboard": "Scoreboard",
+    "selectLanguage": "Select language",
+    "disclaimer": "This is an unofficial social deduction game and is not affiliated with any commercial title."
+  },
+  "rulesEditorView": {
+    "gameRules": "Game Rules",
+    "authenticWinPoints": "Authentic Win Points",
+    "maskWinPoints": "Mask Win Points",
+    "chameleonWinPoints": "Chameleon Win Points",
+    "chameleonCanGuessTheWord": "Chameleon Can Guess The Word"
+  },
+  "playerSelectionView": {
+    "gameSetup": "Game Setup"
+  },
+  "wordRevealView": {
+    "wordReveal": "Word Reveal",
+    "playerProgress": "Player {{current}} of {{total}}",
+    "passPhoneTo": "Pass the phone to {{playerName}}",
+    "ready": "Ready",
+    "enterYourName": "Enter your name",
+    "yourNamePlaceholder": "Your name...",
+    "nameAlreadyTaken": "That name is already taken",
+    "noSpecialChars": "No special characters allowed",
+    "nameTooLong": "Name must be {{max}} characters or less",
+    "yourWordIs": "Your word is:",
+    "tapToReveal": "Tap to reveal",
+    "youDontKnowTheWord": "You don't know the word!",
+    "yourWord": "Your word:",
+    "gotIt": "Got it!",
+    "nextPlayer": "Next player",
+    "startGame": "Start game"
+  },
+  "discussionView": {
+    "discussionPhase": "Discussion phase",
+    "starts": "starts",
+    "discussionInstructions1": "Each player must say <bold>one word</bold>, starting from <bold>{{startingPlayerName}}</bold> and continuing clockwise, until everyone has said a word.",
+    "discussionInstructions2": "Once everyone is done, discuss who you think are the <bold>Masks</bold> or the <bold>Chameleon</bold>, then proceed to the voting phase.",
+    "discussionInstructions3": "In case of a voting tie, the tied players each reveal <bold>one word</bold>, then all players vote again based on the new hints.",
+    "goToVote": "Go to vote",
+    "IForgotMyWord": "I forgot my word"
+  },
+  "forgotWordView": {
+    "forgotWord": "Forgot Word",
+    "whoForgotTheirWord": "Who forgot their word?",
+    "lookAtWordFor": "Look at word for {{playerName}}",
+    "areYouSureYouWantToLookAtTheWordFor": "Are you sure want to look at the word for <bold>{{playerName}}</bold>?",
+    "backToDiscussion": "Back to discussion"
+  },
+  "voteView": {
+    "vote": "Vote",
+    "startingPlayerThisRound": "Starting player this round: <player>{{playerName}}</player>",
+    "whoIsBeingVotedOut": "Who is being voted out?",
+    "voteFor": "Vote for {{playerName}}",
+    "confirmVoteFor": "Confirm vote for <bold>{{playerName}}</bold>?"
+  },
+  "voteRevealView": {
+    "playerEliminated": "Player Eliminated",
+    "chameleonGuessTheAuthenticWord": "Chameleon, guess the authentic word:",
+    "yourGuessPlaceholder": "Your guess...",
+    "submitGuess": "Submit guess",
+    "confirmGuess": "Confirm guess: <bold>{{guess}}</bold>?",
+    "correctGuessChameleonWins": "Correct guess! Chameleon wins!",
+    "wrongGuessChameleonIsEliminated": "Wrong guess. Chameleon is eliminated."
+  },
+  "gameEndView": {
+    "gameOver": "Game Over",
+    "winner": "Winner:",
+    "pointsAwarded": "Points awarded: {{points}}",
+    "words": "Words",
+    "playerRoles": "Player Roles"
+  }
+}

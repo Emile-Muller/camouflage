@@ -1,0 +1,102 @@
+{
+  "playerSingular": "Joueur",
+  "playerPlural": "Joueurs",
+  "authenticSingular": "Authentique",
+  "authenticPlural": "Authentiques",
+  "maskSingular": "Masque",
+  "maskPlural": "Masques",
+  "chameleon": "Caméléon",
+  "authenticsAlive_one": "Authentique en vie : <bold>{{count}}</bold>",
+  "authenticsAlive_other": "Authentiques en vie : <bold>{{count}}</bold>",
+  "masksAlive_one": "Masque en vie : <bold>{{count}}</bold>",
+  "masksAlive_other": "Masques en vie : <bold>{{count}}</bold>",
+  "aliveStatus": "En vie",
+  "eliminatedStatus": "Éliminé(e)",
+  "cancel": "Annuler",
+  "confirm": "Confirmer",
+  "continue": "Continuer",
+  "roles": {
+    "authentic": "Authentique",
+    "mask": "Masque",
+    "chameleon": "Caméléon"
+  },
+  "homeScreenView": {
+    "gameTitle": "Camouflage",
+    "partyDeductionGame": "Jeu de déduction en groupe",
+    "authenticObjective": "Connait le mot. Trouve les Masques et le Caméléon.",
+    "maskObjective": "Connait un autre mot. Passe inaperçu.",
+    "chameleonObjective": "N'a pas de mot. Essaye de deviner le mot et de passe inaperçu.",
+    "startGame": "Commencer la partie",
+    "editRules": "Éditer les règles",
+    "scoreboard": "Tableau des scores",
+    "selectLanguage": "Sélectionner la langue",
+    "disclaimer": "Il s'agit d'un jeu de déduction sociale non officiel et n'est affilié à aucun titre commercial."
+  },
+  "rulesEditorView": {
+    "gameRules": "Règles du jeu",
+    "authenticWinPoints": "Points gagnés par les Authentiques",
+    "maskWinPoints": "Points gagnés par les Masques",
+    "chameleonWinPoints": "Points gagnés par le Caméléon",
+    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot"
+  },
+  "playerSelectionView": {
+    "gameSetup": "Configuration du jeu"
+  },
+  "wordRevealView": {
+    "wordReveal": "Révélation des mots",
+    "playerProgress": "Joueur {{current}} sur {{total}}",
+    "passPhoneTo": "Passe le téléphone à {{playerName}}",
+    "ready": "Prêt(e)",
+    "enterYourName": "Entre ton nom",
+    "yourNamePlaceholder": "Ton nom...",
+    "nameAlreadyTaken": "Ce nom est déjà pris",
+    "noSpecialChars": "Pas de caractères spéciaux autorisés",
+    "nameTooLong": "Le nom doit comporter {{max}} caractères ou moins",
+    "yourWordIs": "Ton mot est:",
+    "tapToReveal": "Appuyez pour révéler",
+    "youDontKnowTheWord": "Tu ne connais pas le mot!",
+    "yourWord": "Ton mot:",
+    "gotIt": "Compris !",
+    "nextPlayer": "Joueur suivant",
+    "startGame": "Commencer la partie"
+  },
+  "discussionView": {
+    "discussionPhase": "Phase de discussion",
+    "starts": "commence",
+    "discussionInstructions1": "Chaque joueur doit dire <bold>un mot</bold>, en commençant par <bold>{{startingPlayerName}}</bold> et en continuant dans le sens des aiguilles d'une montre, jusqu'à ce que chacun ait dit un mot.",
+    "discussionInstructions2": "Une fois que tout le monde a terminé, débattez de qui, selon vous, sont les <bold>Masques</bold> ou le <bold>Caméléon</bold>, puis passez à la phase de vote.",
+    "discussionInstructions3": "En cas d'égalité des votes, les joueurs à égalité révèlent chacun un mot, puis tous les joueurs votent à nouveau en fonction des nouveaux indices.",
+    "goToVote": "Passer au vote",
+    "IForgotMyWord": "J'ai oublié mon mot"
+  },
+  "forgotWordView": {
+    "forgotWord": "Mot oublié",
+    "whoForgotTheirWord": "Qui a oublié son mot?",
+    "lookAtWordFor": "Regarder le mot de {{playerName}}",
+    "areYouSureYouWantToLookAtTheWordFor": "Êtes-vous sûr de vouloir regarder le mot de <bold>{{playerName}}</bold> ?",
+    "backToDiscussion": "Retour à la discussion"
+  },
+  "voteView": {
+    "vote": "Vote",
+    "startingPlayerThisRound": "Joueur qui a commencé le round: <player>{{playerName}}</player>",
+    "whoIsBeingVotedOut": "Qui est éliminé par le vote ?",
+    "voteFor": "Voter pour {{playerName}}",
+    "confirmVoteFor": "Confirmer le vote pour <bold>{{playerName}}</bold> ?"
+  },
+  "voteRevealView": {
+    "playerEliminated": "Joueur éliminé",
+    "chameleonGuessTheAuthenticWord": "Caméléon, devine le mot des Authentiques:",
+    "yourGuessPlaceholder": "Ta réponse ...",
+    "submitGuess": "Confirmer",
+    "confirmGuess": "Confirmer cette réponse : <bold>{{guess}}</bold> ?",
+    "correctGuessChameleonWins": "Correct ! Le Caméléon gagne !",
+    "wrongGuessChameleonIsEliminated": "Mauvaise réponse. Le Caméléon est éliminé."
+  },
+  "gameEndView": {
+    "gameOver": "Fin de la partie",
+    "winner": "Gagnant :",
+    "pointsAwarded": "Points remportés : {{points}}",
+    "words": "Mots",
+    "playerRoles": "Rôles des joueurs"
+  }
+}
