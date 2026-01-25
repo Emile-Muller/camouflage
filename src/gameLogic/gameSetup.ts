@@ -16,8 +16,14 @@ export interface GameSetupControls {
 const MIN_PLAYERS = 3;
 const MAX_PLAYERS = 12;
 
-export function getMaxMasks(players: number, includeChameleon: boolean): number {
-  return Math.max(1, Math.floor((players - 1 - (includeChameleon ? 1 : 0)) / 2));
+export function getMaxMasks(
+  players: number,
+  includeChameleon: boolean,
+): number {
+  return Math.max(
+    1,
+    Math.floor((players - 1 - (includeChameleon ? 1 : 0)) / 2),
+  );
 }
 
 function recalcAuthentics(setup: GameSetup): GameSetup {
@@ -34,7 +40,10 @@ export function normalizeSetup(setup: GameSetup): GameSetup {
 
   const chameleon = setup.chameleon && players > 3;
 
-  let masks = Math.min(getMaxMasks(players, setup.chameleon), Math.max(1, setup.masks));
+  let masks = Math.min(
+    getMaxMasks(players, setup.chameleon),
+    Math.max(1, setup.masks),
+  );
 
   let normalized = recalcAuthentics({
     players,
@@ -44,10 +53,7 @@ export function normalizeSetup(setup: GameSetup): GameSetup {
   });
 
   // Enforce authentics rules
-  if (
-    normalized.authentics < 2 ||
-    normalized.authentics <= normalized.masks
-  ) {
+  if (normalized.authentics < 2 || normalized.authentics <= normalized.masks) {
     masks = Math.max(1, masks - 1);
     normalized = recalcAuthentics({
       players,
@@ -68,8 +74,7 @@ export function getControls(setup: GameSetup): GameSetupControls {
     canAddPlayer: setup.players < MAX_PLAYERS,
     canRemovePlayer: setup.players > MIN_PLAYERS,
 
-    canAddMask:
-      setup.masks < getMaxMasks(setup.players, setup.chameleon),
+    canAddMask: setup.masks < getMaxMasks(setup.players, setup.chameleon),
 
     canRemoveMask: setup.masks > 1,
 
@@ -82,9 +87,14 @@ export function getControls(setup: GameSetup): GameSetupControls {
  */
 export const GameSetupActions = {
   addPlayer(setup: GameSetup): GameSetup {
-    return normalizeSetup({
+    const newSetup = normalizeSetup({
       ...setup,
       players: setup.players + 1,
+    });
+
+    return normalizeSetup({
+      ...newSetup,
+      masks: getMaxMasks(newSetup.players, newSetup.chameleon),
     });
   },
 
