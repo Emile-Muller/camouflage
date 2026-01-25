@@ -10,6 +10,7 @@
   "authenticsAlive_other": "Authentiques en vie : <bold>{{count}}</bold>",
   "masksAlive_one": "Masque en vie : <bold>{{count}}</bold>",
   "masksAlive_other": "Masques en vie : <bold>{{count}}</bold>",
+  "chameleonStatus": "Caméléon :",
   "aliveStatus": "En vie",
   "eliminatedStatus": "Éliminé(e)",
   "cancel": "Annuler",
@@ -23,14 +24,14 @@
   "homeScreenView": {
     "gameTitle": "Camouflage",
     "partyDeductionGame": "Jeu de déduction en groupe",
-    "authenticObjective": "Connait le mot. Trouve les Masques et le Caméléon.",
-    "maskObjective": "Connait un autre mot. Passe inaperçu.",
-    "chameleonObjective": "N'a pas de mot. Essaye de deviner le mot et de passe inaperçu.",
+    "authenticObjective": "Tu connais le mot authentique. Trouve les Masques et le Caméléon.",
+    "maskObjective": "Tu connais un autre mot. Passe inaperçu.",
+    "chameleonObjective": "Pas de mot. Essaie de deviner le mot authentique et de passer inaperçu.",
     "startGame": "Commencer la partie",
     "editRules": "Éditer les règles",
     "scoreboard": "Tableau des scores",
     "selectLanguage": "Sélectionner la langue",
-    "disclaimer": "Il s'agit d'un jeu de déduction sociale non officiel et n'est affilié à aucun titre commercial."
+    "disclaimer": "Il s'agit d'un jeu de déduction non officiel qui n'est affilié à aucun titre commercial."
   },
   "rulesEditorView": {
     "gameRules": "Règles du jeu",
@@ -53,7 +54,7 @@
     "noSpecialChars": "Pas de caractères spéciaux autorisés",
     "nameTooLong": "Le nom doit comporter {{max}} caractères ou moins",
     "yourWordIs": "Ton mot est:",
-    "tapToReveal": "Appuyez pour révéler",
+    "tapToReveal": "Appuyer pour révéler",
     "youDontKnowTheWord": "Tu ne connais pas le mot!",
     "yourWord": "Ton mot:",
     "gotIt": "Compris !",

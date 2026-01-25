@@ -48,7 +48,7 @@ export function AliveRolesSummary({ players }: AliveRolesSummaryProps) {
 
       {hasChameleon && (
         <p>
-          {ROLES.chameleon.icon} {t("chameleon")}:{" "}
+          {ROLES.chameleon.icon}{" "}{t("chameleonStatus")}{" "}
           <span className="font-semibold">
             {chameleonAlive ? t("aliveStatus") : t("eliminatedStatus")}
           </span>

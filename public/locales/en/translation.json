@@ -10,6 +10,7 @@
   "authenticsAlive_other": "Authentics alive: <bold>{{count}}</bold>",
   "masksAlive_one": "Mask alive: <bold>{{count}}</bold>",
   "masksAlive_other": "Masks alive: <bold>{{count}}</bold>",
+  "chameleonStatus": "Chameleon:",
   "aliveStatus": "Alive",
   "eliminatedStatus": "Eliminated",
   "cancel": "Cancel",
@@ -23,14 +24,14 @@
   "homeScreenView": {
     "gameTitle": "Camouflage",
     "partyDeductionGame": "Party deduction game",
-    "authenticObjective": "Know the word. Find the Masks and the Chameleon.",
-    "maskObjective": "Know another word. Blend in.",
-    "chameleonObjective": "No word. Try to guess the word and blend in.",
+    "authenticObjective": "You know the authentic word. Find the Masks and the Chameleon.",
+    "maskObjective": "You know another word. Blend in.",
+    "chameleonObjective": "No word. Try to guess the authentic word and blend in.",
     "startGame": "Start game",
     "editRules": "Edit rules",
     "scoreboard": "Scoreboard",
     "selectLanguage": "Select language",
-    "disclaimer": "This is an unofficial social deduction game and is not affiliated with any commercial title."
+    "disclaimer": "This is an unofficial deduction game which is not affiliated with any commercial title."
   },
   "rulesEditorView": {
     "gameRules": "Game Rules",
