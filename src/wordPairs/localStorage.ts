@@ -1,7 +1,7 @@
 import type { WordPair } from "./words";
 
 const STORAGE_KEYS = {
-  USED_WORD_PAIRS: "",
+  USED_WORD_PAIRS: "USED_WORD_PAIRS",
 };
 
 function loadUsedWordPairIds(): string[] {
