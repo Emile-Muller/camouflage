@@ -36,12 +36,6 @@ export function getAllWordPairs(): WordPair[] {
     };
   });
 
-  /*const wordPairs: WordPair[] = Object.entries(data).map(([id, pair]) => ({
-    id,
-    authentic: pair.authentic,
-    mask: pair.mask,
-  }));*/
-
   return wordPairs;
 }
 
