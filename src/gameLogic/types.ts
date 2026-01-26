@@ -19,3 +19,5 @@ export type WinnerInfo = {
   name: Role;
   points: number;
 };
+
+export type Language = string;

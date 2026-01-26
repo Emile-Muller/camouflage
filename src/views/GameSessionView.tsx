@@ -6,7 +6,7 @@ import { attributeRolesToPlayers } from "../gameLogic/roleAttribution";
 import { HomeScreenView } from "./HomeScreenView";
 import { getRandomPairs, type WordPair } from "../wordPairs/words";
 import { saveUsedWordPairId } from "../wordPairs/localStorage";
-import type { Player, RoleWinPoints, WinnerInfo } from "../gameLogic/types";
+import type { Language, Player, RoleWinPoints, WinnerInfo } from "../gameLogic/types";
 import { RulesEditorView } from "./RulesEditorView";
 import i18n from "i18next";
 
@@ -35,10 +35,10 @@ export function GameSessionView() {
 
   const startPlaying = () => {
     let wordPairs = sessionPairs;
-    const newLanguage = i18n.language;
+    const newLanguage: Language = i18n.language;
 
     if (sessionPairs.length == 0 || newLanguage != language) {
-      wordPairs = getRandomPairs(TOTAL_PAIRS_PER_SESSION);
+      wordPairs = getRandomPairs(TOTAL_PAIRS_PER_SESSION, newLanguage);
     }
 
     setLanguage(newLanguage);
@@ -99,7 +99,7 @@ export function GameSessionView() {
     );
     setDoPlayersHaveScore(true);
 
-    saveUsedWordPairId(sessionPairs[currentGameIndex].id);
+    saveUsedWordPairId(sessionPairs[currentGameIndex].id, language);
     setCurrentGameIndex((i) => Math.min(i + 1, sessionPairs.length - 1));
     setState("home");
   };
