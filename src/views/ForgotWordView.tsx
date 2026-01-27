@@ -143,7 +143,7 @@ export function ForgotWordView({
 
         <button
           onClick={() => onBackToDiscussion()}
-          className="w-full flex-1 rounded-lg bg-gray-600 hover:bg-gray-500 py-2 font-semibold"
+          className="w-full flex-1 rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2"
         >
           {t("forgotWordView.backToDiscussion")}
         </button>

@@ -6,11 +6,17 @@ import { attributeRolesToPlayers } from "../gameLogic/roleAttribution";
 import { HomeScreenView } from "./HomeScreenView";
 import { getRandomPairs, type WordPair } from "../wordPairs/words";
 import { saveUsedWordPairId } from "../wordPairs/localStorage";
-import type { Language, Player, RoleWinPoints, WinnerInfo } from "../gameLogic/types";
+import type {
+  Language,
+  Player,
+  RoleWinPoints,
+  WinnerInfo,
+} from "../gameLogic/types";
 import { RulesEditorView } from "./RulesEditorView";
 import i18n from "i18next";
+import { RulesView } from "./RulesView";
 
-type SessionState = "home" | "rules" | "setup" | "playing";
+type SessionState = "home" | "rules" | "rulesEditor" | "setup" | "playing";
 
 const TOTAL_PAIRS_PER_SESSION = 30;
 
@@ -86,7 +92,7 @@ export function GameSessionView() {
 
   const endGame = (winner: WinnerInfo | null) => {
     if (winner === null) return;
-    
+
     setPlayers((prev) =>
       prev.map((player) => {
         const shouldAwardPoints =
@@ -116,11 +122,15 @@ export function GameSessionView() {
           doPlayersHaveScore={doPlayersHaveScore}
           players={players}
           onStart={startGame}
-          onEditRules={() => setState("rules")}
+          onRules={() => setState("rules")}
+          onEditRules={() => setState("rulesEditor")}
         />
       );
 
     case "rules":
+      return <RulesView onClose={() => setState("home")} />;
+
+    case "rulesEditor":
       return (
         <RulesEditorView
           roleWinPoints={roleWinPoints}

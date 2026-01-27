@@ -2,11 +2,11 @@ import type { Player } from "../gameLogic/types";
 import { ROLES } from "../constants/roles";
 import { Trans, useTranslation } from "react-i18next";
 
-interface AliveRolesSummaryProps {
+interface AliveRolesComponentProps {
   players: Player[];
 }
 
-export function AliveRolesSummary({ players }: AliveRolesSummaryProps) {
+export function AliveRolesComponent({ players }: AliveRolesComponentProps) {
   const { t } = useTranslation();
 
   const alivePlayers = players.filter((p) => p.alive);
