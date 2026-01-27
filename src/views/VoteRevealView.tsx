@@ -4,7 +4,7 @@ import type { Player } from "../gameLogic/types";
 import { Trans, useTranslation } from "react-i18next";
 
 interface VoteRevealViewProps {
-  eliminatedPlayer: Player;
+  eliminatedPlayer: Player | null;
   correctWord: string;
   chameleonGuessPossible: boolean;
   onContinue: (chameleonGuess?: string | null) => void;
@@ -24,7 +24,9 @@ export function VoteRevealView({
     null,
   );
 
-  const isChameleon = eliminatedPlayer.role === "chameleon";
+  if (eliminatedPlayer === null) return;
+
+  const isChameleon = eliminatedPlayer!.role === "chameleon";
 
   const handleConfirmGuess = () => {
     if (!guess.trim()) return;

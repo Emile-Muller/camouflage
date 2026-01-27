@@ -1,14 +1,11 @@
 import { upperFirst } from "../utils/utils";
 import { ROLES } from "../constants/roles";
 import type { WordPair } from "../wordPairs/words";
-import type { Player, Role } from "../gameLogic/types";
+import type { Player, Role, WinnerInfo } from "../gameLogic/types";
 import { useTranslation } from "react-i18next";
 
 interface GameEndViewProps {
-  winner: {
-    name: string;
-    points: number;
-  };
+  winner: WinnerInfo | null;
   players: Player[];
   wordPair: WordPair;
   onConfirm: () => void;
@@ -21,6 +18,8 @@ export function GameEndView({
   onConfirm,
 }: GameEndViewProps) {
   const { t } = useTranslation();
+
+  if (winner === null) return;
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 flex items-center justify-center p-4">

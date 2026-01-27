@@ -24,7 +24,7 @@ interface GameViewProps {
   wordPair: WordPair;
   roleWinPoints: RoleWinPoints;
   chameleonGuessPossible: boolean;
-  onGameEnd: (winner: WinnerInfo) => void;
+  onGameEnd: (winner: WinnerInfo | null) => void;
 }
 
 export function GameView({
@@ -185,80 +185,75 @@ export function GameView({
   // -------------------------
   // Rendering
   // -------------------------
-  if (phase === "wordReveal") {
-    return (
-      <WordRevealView
-        setup={setup}
-        players={players}
-        setPlayers={setPlayers}
-        onComplete={() => {
-          setPlayers((prev) => getPlayerStartingOrder(prev));
-          setStartingPlayerIndex(0);
-          setPhase("discussion");
-        }}
-      />
-    );
-  }
+  switch (phase) {
+    case "wordReveal":
+      return (
+        <WordRevealView
+          setup={setup}
+          players={players}
+          setPlayers={setPlayers}
+          onComplete={() => {
+            setPlayers((prev) => getPlayerStartingOrder(prev));
+            setStartingPlayerIndex(0);
+            setPhase("discussion");
+          }}
+        />
+      );
 
-  if (phase === "discussion") {
-    return (
-      <DiscussionView
-        players={players}
-        startingPlayerIndex={startingPlayerIndex}
-        startingPlayerName={startingPlayerName}
-        onStartVote={() => setPhase("vote")}
-        onForgotWord={() => setPhase("forgotWord")}
-      />
-    );
-  }
+    case "discussion":
+      return (
+        <DiscussionView
+          players={players}
+          startingPlayerIndex={startingPlayerIndex}
+          startingPlayerName={startingPlayerName}
+          onStartVote={() => setPhase("vote")}
+          onForgotWord={() => setPhase("forgotWord")}
+        />
+      );
 
-  if (phase === "forgotWord") {
-    return (
-      <ForgotWordView
-        players={players}
-        onBackToDiscussion={() => setPhase("discussion")}
-      />
-    );
-  }
+    case "forgotWord":
+      return (
+        <ForgotWordView
+          players={players}
+          onBackToDiscussion={() => setPhase("discussion")}
+        />
+      );
 
-  if (phase === "vote") {
-    return (
-      <VoteView
-        players={players}
-        startingPlayerName={startingPlayerName}
-        onConfirmVote={handleVote}
-      />
-    );
-  }
+    case "vote":
+      return (
+        <VoteView
+          players={players}
+          startingPlayerName={startingPlayerName}
+          onConfirmVote={handleVote}
+        />
+      );
 
-  if (phase === "voteReveal" && eliminatedPlayer) {
-    return (
-      <VoteRevealView
-        eliminatedPlayer={eliminatedPlayer}
-        correctWord={wordPair.authentic}
-        chameleonGuessPossible={chameleonGuessPossible}
-        onContinue={(chameleonGuess) => {
-          handleContinueAfterReveal(chameleonGuess);
-        }}
-      />
-    );
-  }
+    case "voteReveal":
+      return (
+        <VoteRevealView
+          eliminatedPlayer={eliminatedPlayer}
+          correctWord={wordPair.authentic}
+          chameleonGuessPossible={chameleonGuessPossible}
+          onContinue={(chameleonGuess) => {
+            handleContinueAfterReveal(chameleonGuess);
+          }}
+        />
+      );
 
-  if (phase === "gameEnd" && winner) {
-    return (
-      <GameEndView
-        winner={winner}
-        players={players}
-        wordPair={wordPair}
-        onConfirm={() => {
-          if (onGameEnd) {
+    case "gameEnd":
+      return (
+        <GameEndView
+          winner={winner}
+          players={players}
+          wordPair={wordPair}
+          onConfirm={() => {
             onGameEnd(winner);
             setPhase("wordReveal");
-          }
-        }}
-      />
-    );
+          }}
+        />
+      );
+      
+    default:
+      return null;
   }
-
-  return null;
 }
