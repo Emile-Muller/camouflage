@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AliveRolesSummary } from "../components/AliveRolesSummary";
+import { AliveRolesComponent } from "../components/AliveRolesComponent";
 import type { Player } from "../gameLogic/types";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -7,12 +7,14 @@ interface VoteViewProps {
   players: Player[];
   startingPlayerName: string;
   onConfirmVote: (votedPlayer: Player) => void;
+  backToDiscussion: () => void;
 }
 
 export function VoteView({
   players,
   startingPlayerName,
   onConfirmVote,
+  backToDiscussion,
 }: VoteViewProps) {
   const { t } = useTranslation();
 
@@ -39,7 +41,7 @@ export function VoteView({
             />
           </p>
 
-          <AliveRolesSummary players={players} />
+          <AliveRolesComponent players={players} />
 
           <p className="text-sm text-zinc-300">
             {t("voteView.whoIsBeingVotedOut")}
@@ -124,6 +126,13 @@ export function VoteView({
             )}
           </div>
         )}
+
+        <button
+          onClick={backToDiscussion}
+          className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2"
+        >
+          {t("voteView.backToDiscussion")}
+        </button>
       </div>
     </div>
   );

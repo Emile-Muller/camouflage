@@ -6,6 +6,7 @@ interface HomeScreenViewProps {
   doPlayersHaveScore: boolean;
   players: Player[];
   onStart: () => void;
+  onRules: () => void;
   onEditRules: () => void;
 }
 
@@ -13,6 +14,7 @@ export function HomeScreenView({
   doPlayersHaveScore,
   players,
   onStart,
+  onRules,
   onEditRules,
 }: HomeScreenViewProps) {
   const { t, i18n } = useTranslation();
@@ -21,39 +23,11 @@ export function HomeScreenView({
     <div className="min-h-screen bg-zinc-900 text-zinc-100 flex items-center justify-center px-4">
       <div className="w-full max-w-sm rounded-2xl bg-zinc-800 shadow-lg p-6 space-y-6">
         <h1 className="text-2xl font-semibold text-center">
-          {t("homeScreenView.gameTitle")}
+          {t("gameTitle")}
           <span className="block text-xs text-zinc-400 tracking-wide uppercase mt-1">
-            {t("homeScreenView.partyDeductionGame")}
+            {t("partyDeductionGame")}
           </span>
         </h1>
-
-        <div className="space-y-3 text-sm text-zinc-300 leading-relaxed">
-          <ul className="space-y-2">
-            <li>
-              <span className="uppercase tracking-wide text-zinc-400 text-xs">
-                {t("authenticPlural")}
-              </span>
-              <br />
-              {t("homeScreenView.authenticObjective")}
-            </li>
-
-            <li>
-              <span className="uppercase tracking-wide text-zinc-400 text-xs">
-                {t("maskPlural")}
-              </span>
-              <br />
-              {t("homeScreenView.maskObjective")}
-            </li>
-
-            <li>
-              <span className="uppercase tracking-wide text-zinc-400 text-xs">
-                {t("chameleon")}
-              </span>
-              <br />
-              {t("homeScreenView.chameleonObjective")}
-            </li>
-          </ul>
-        </div>
 
         <button
           onClick={onStart}
@@ -62,12 +36,21 @@ export function HomeScreenView({
           {t("homeScreenView.startGame")}
         </button>
 
-        <button
+        <div className="flex gap-3">
+          <button
+            onClick={onRules}
+            className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2 text-md"
+          >
+          {t("howToPlay")}
+          </button>
+
+          <button
           onClick={onEditRules}
           className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2 text-md"
-        >
+          >
           {t("homeScreenView.editRules")}
-        </button>
+          </button>
+        </div>
 
         {doPlayersHaveScore && (
           <div className="space-y-2">
@@ -112,9 +95,7 @@ export function HomeScreenView({
           {t("homeScreenView.disclaimer")}
         </p>
 
-        <p className="text-xs text-zinc-500">
-          &#169; Emile Muller, 2026
-        </p>
+        <p className="text-xs text-zinc-500">&#169; Emile Muller, 2026</p>
       </div>
     </div>
   );

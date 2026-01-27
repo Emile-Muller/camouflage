@@ -8,8 +8,13 @@ i18next
   .use(LanguageDetector)
   .use(HttpBackend)
   .init({
-    lng: "en",
     fallbackLng: "en",
+    supportedLngs: ["en", "fr"],
+    detection: {
+      order: ["navigator", "localStorage"],
+      caches: ["localStorage"],
+      lookupLocalStorage: "i18nextLng",
+    },
     ns: ["translation"],
     interpolation: {
       escapeValue: false,

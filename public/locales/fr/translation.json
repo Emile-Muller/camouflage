@@ -1,4 +1,7 @@
 {
+  "gameTitle": "Camouflage",
+  "partyDeductionGame": "Jeu de déduction en groupe",
+  "howToPlay": "Comment jouer ?",
   "playerSingular": "Joueur",
   "playerPlural": "Joueurs",
   "authenticSingular": "Authentique",
@@ -10,6 +13,7 @@
   "authenticsAlive_other": "Authentiques en vie : <bold>{{count}}</bold>",
   "masksAlive_one": "Masque en vie : <bold>{{count}}</bold>",
   "masksAlive_other": "Masques en vie : <bold>{{count}}</bold>",
+  "chameleonStatus": "Caméléon :",
   "aliveStatus": "En vie",
   "eliminatedStatus": "Éliminé(e)",
   "cancel": "Annuler",
@@ -21,23 +25,58 @@
     "chameleon": "Caméléon"
   },
   "homeScreenView": {
-    "gameTitle": "Camouflage",
-    "partyDeductionGame": "Jeu de déduction en groupe",
-    "authenticObjective": "Connait le mot. Trouve les Masques et le Caméléon.",
-    "maskObjective": "Connait un autre mot. Passe inaperçu.",
-    "chameleonObjective": "N'a pas de mot. Essaye de deviner le mot et de passe inaperçu.",
     "startGame": "Commencer la partie",
     "editRules": "Éditer les règles",
     "scoreboard": "Tableau des scores",
     "selectLanguage": "Sélectionner la langue",
-    "disclaimer": "Il s'agit d'un jeu de déduction sociale non officiel et n'est affilié à aucun titre commercial."
+    "disclaimer": "Il s'agit d'un jeu de déduction non officiel qui n'est affilié à aucun titre commercial."
+  },
+  "rulesView": {
+    "camouflageDescription": "Camouflage est un jeu de déduction où ton objectif dépend de ton rôle secret.",
+    "roles": "Rôles",
+    "authenticObjective": "Tu connais le mot authentique. Identifie et élimine les Masques et le Caméléon.",
+    "maskObjective": "Tu connais un mot différent. Passe inaperçu et évite d'être démasqué.",
+    "chameleonObjective": "Tu ne reçois aucun mot. Déduis le mot authentique et passe inaperçu.",
+    "gameplay": {
+      "title": "Déroulement du jeu",
+      "paragraph1": "À chaque manche, chaque joueur doit dire <bold>un mot</bold> en lien avec le mot qui lui a été donné.",
+      "paragraph2": "Ton mot doit être différent du mot donné et ne pas partager la même racine (par exemple, tu ne peux pas dire \"glacé\" si ton mot est \"glace\").",
+      "paragraph3": "Si tu es le Caméléon et que tu n'as pas de mot, dis un mot qui correspond à ce que disent les autres joueurs afin d'éviter les soupçons.",
+      "paragraph4": "L'objectif est <bold>d'identifier et d'éliminer les joueurs</bold> dont le rôle est différent du tien."
+    },
+    "voting": {
+      "title": "Phase de vote",
+      "paragraph1": "Une fois que tous les joueurs ont parlé, la partie entre en phase de vote. Les joueurs discutent et votent à main levée pour éliminer un joueur.",
+      "paragraph2": "Tu ne peux <bold>pas</bold> dire ton mot pendant la discussion de vote.",
+      "paragraph3": "En cas d'égalité, les joueurs à égalité révèlent chacun un mot supplémentaire, puis tous les joueurs votent à nouveau.",
+      "paragraph4": "Autrement, le joueur qui a commencé la manche peut utiliser un vote comptant double pour départager l'égalité.",
+      "paragraph5": "Les joueurs éliminés ne peuvent plus interférer avec la partie."
+    },
+    "chameleonGuess": {
+      "title": "Dernière chance du Caméléon",
+      "paragraph1": "Si le Caméléon est éliminé et que cette option est activée, il obtient une dernière chance de deviner le mot authentique.",
+      "paragraph2": "Si sa réponse est <bold>correcte</bold>, la partie se termine immédiatement et le Caméléon gagne.",
+      "paragraph3": "Si sa réponse est incorrecte, le Caméléon est définitivement éliminé et la partie continue."
+    },
+    "rounds": {
+      "title": "Manches",
+      "paragraph1": "Après le vote, une nouvelle manche commence. Chaque joueur encore en jeu dit un nouveau mot, suivi d'un nouveau vote. Cela continue jusqu'à ce qu'une condition de victoire soit atteinte."
+    },
+    "winConditions": {
+      "title": "Conditions de victoire",
+      "condition1": "<bold>Il ne reste que des Authentiques en jeu :</bold> Tous les Authentiques gagnent.",
+      "condition2": "<bold>Un Authentique en jeu, aucun Masque en jeu, le Caméléon est en jeu :</bold> Le Caméléon gagne.",
+      "condition3": "<bold>Un Authentique en jeu, le Caméléon est éliminé, au moins un Masque est en jeu :</bold> Tous les Masques gagnent.",
+      "condition4": "<bold>Aucun Authentique en jeu, le Caméléon est en jeu, au moins un Masque est en jeu :</bold> Le Caméléon et tous les Masques gagnent."
+    }
   },
   "rulesEditorView": {
     "gameRules": "Règles du jeu",
     "authenticWinPoints": "Points gagnés par les Authentiques",
     "maskWinPoints": "Points gagnés par les Masques",
     "chameleonWinPoints": "Points gagnés par le Caméléon",
-    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot"
+    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot",
+    "timerDuration": "Durée du minuteur (secondes)"
   },
   "playerSelectionView": {
     "gameSetup": "Configuration du jeu"
@@ -53,7 +92,7 @@
     "noSpecialChars": "Pas de caractères spéciaux autorisés",
     "nameTooLong": "Le nom doit comporter {{max}} caractères ou moins",
     "yourWordIs": "Ton mot est:",
-    "tapToReveal": "Appuyez pour révéler",
+    "tapToReveal": "Appuyer pour révéler",
     "youDontKnowTheWord": "Tu ne connais pas le mot!",
     "yourWord": "Ton mot:",
     "gotIt": "Compris !",
@@ -65,8 +104,10 @@
     "starts": "commence",
     "discussionInstructions1": "Chaque joueur doit dire <bold>un mot</bold>, en commençant par <bold>{{startingPlayerName}}</bold> et en continuant dans le sens des aiguilles d'une montre, jusqu'à ce que chacun ait dit un mot.",
     "discussionInstructions2": "Une fois que tout le monde a terminé, débattez de qui, selon vous, sont les <bold>Masques</bold> ou le <bold>Caméléon</bold>, puis passez à la phase de vote.",
-    "discussionInstructions3": "En cas d'égalité des votes, les joueurs à égalité révèlent chacun un mot, puis tous les joueurs votent à nouveau en fonction des nouveaux indices.",
     "goToVote": "Passer au vote",
+    "timer": "Minuteur de discussion",
+    "timerRunning": "Minuteur en cours ...",
+    "timeRemaining": "Temps restant :",
     "IForgotMyWord": "J'ai oublié mon mot"
   },
   "forgotWordView": {
@@ -80,6 +121,7 @@
     "vote": "Vote",
     "startingPlayerThisRound": "Joueur qui a commencé le round: <player>{{playerName}}</player>",
     "whoIsBeingVotedOut": "Qui est éliminé par le vote ?",
+    "backToDiscussion": "Retour à la discussion",
     "voteFor": "Voter pour {{playerName}}",
     "confirmVoteFor": "Confirmer le vote pour <bold>{{playerName}}</bold> ?"
   },
@@ -94,7 +136,8 @@
   },
   "gameEndView": {
     "gameOver": "Fin de la partie",
-    "winner": "Gagnant :",
+    "winner_one": "Gagnant :",
+    "winner_other": "Gagnants :",
     "pointsAwarded": "Points remportés : {{points}}",
     "words": "Mots",
     "playerRoles": "Rôles des joueurs"

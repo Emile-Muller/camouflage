@@ -1,4 +1,7 @@
 {
+  "gameTitle": "Camouflage",
+  "partyDeductionGame": "Party deduction game",
+  "howToPlay": "How to play?",
   "playerSingular": "Player",
   "playerPlural": "Players",
   "authenticSingular": "Authentic",
@@ -10,6 +13,7 @@
   "authenticsAlive_other": "Authentics alive: <bold>{{count}}</bold>",
   "masksAlive_one": "Mask alive: <bold>{{count}}</bold>",
   "masksAlive_other": "Masks alive: <bold>{{count}}</bold>",
+  "chameleonStatus": "Chameleon:",
   "aliveStatus": "Alive",
   "eliminatedStatus": "Eliminated",
   "cancel": "Cancel",
@@ -21,23 +25,58 @@
     "chameleon": "Chameleon"
   },
   "homeScreenView": {
-    "gameTitle": "Camouflage",
-    "partyDeductionGame": "Party deduction game",
-    "authenticObjective": "Know the word. Find the Masks and the Chameleon.",
-    "maskObjective": "Know another word. Blend in.",
-    "chameleonObjective": "No word. Try to guess the word and blend in.",
     "startGame": "Start game",
     "editRules": "Edit rules",
     "scoreboard": "Scoreboard",
     "selectLanguage": "Select language",
-    "disclaimer": "This is an unofficial social deduction game and is not affiliated with any commercial title."
+    "disclaimer": "This is an unofficial deduction game which is not affiliated with any commercial title."
+  },
+  "rulesView": {
+    "camouflageDescription": "Camouflage is a deduction game where your objective depends on your hidden role.",
+    "roles": "Roles",
+    "authenticObjective": "You know the authentic word. Identify and eliminate the Masks and the Chameleon.",
+    "maskObjective": "You know a different word. Blend in and avoid detection.",
+    "chameleonObjective": "You receive no word. Deduce the authentic word and blend in.",
+    "gameplay": {
+      "title": "Gameplay",
+      "paragraph1": "Each round, every player must say <bold>one word</bold> related to the word they were given.",
+      "paragraph2": "Your word must be different from the given word and cannot share the same root (for example, you cannot say \"icy\" if your word is \"ice\").",
+      "paragraph3": "If you are the Chameleon and have no word, say a word that fits in with what others are saying to avoid suspicion.",
+      "paragraph4": "The goal is to <bold>identify and eliminate players</bold> whose roles are different from your own."
+    },
+    "voting": {
+      "title": "Voting phase",
+      "paragraph1": "After all players have spoken, the game enters the voting phase. Players discuss and vote to eliminate one player by a show of hands.",
+      "paragraph2": "Players may <bold>not</bold> say their word during the voting discussion.",
+      "paragraph3": "In the event of a tie, the tied players each reveal one additional word, then everyone votes again.",
+      "paragraph4": "Alternatively, the player who started the round may cast a vote that counts as double to break the tie.",
+      "paragraph5": "Eliminated players cannot interfere with the game in any way."
+    },
+    "chameleonGuess": {
+      "title": "Chameleon Guess",
+      "paragraph1": "If the Chameleon is eliminated and this option is enabled, they are given one final chance to guess the authentic word.",
+      "paragraph2": "If the guess is <bold>successful</bold>, the game immediately ends and the Chameleon wins.",
+      "paragraph3": "If the guess is incorrect, the Chameleon is fully eliminated and the game continues."
+    },
+    "rounds": {
+      "title": "Rounds",
+      "paragraph1": "After voting, a new round begins. Each remaining player says another word, followed by another vote. This continues until a win condition is met."
+    },
+    "winConditions": {
+      "title": "Win Conditions",
+      "condition1": "<bold>Only Authentics remain alive:</bold> All Authentics win.",
+      "condition2": "<bold>One Authentic alive, no Masks alive, Chameleon alive:</bold> The Chameleon wins.",
+      "condition3": "<bold>One Authentic alive, Chameleon eliminated, at least one Mask alive: </bold> All Masks win.",
+      "condition4": "<bold>No Authentics alive, Chameleon alive, at least one Mask alive: </bold> The Chameleon and all Masks win."
+    }
   },
   "rulesEditorView": {
     "gameRules": "Game Rules",
     "authenticWinPoints": "Authentic Win Points",
     "maskWinPoints": "Mask Win Points",
     "chameleonWinPoints": "Chameleon Win Points",
-    "chameleonCanGuessTheWord": "Chameleon Can Guess The Word"
+    "chameleonCanGuessTheWord": "Chameleon Can Guess The Word",
+    "timerDuration": "Timer duration (seconds)"
   },
   "playerSelectionView": {
     "gameSetup": "Game Setup"
@@ -65,8 +104,10 @@
     "starts": "starts",
     "discussionInstructions1": "Each player must say <bold>one word</bold>, starting from <bold>{{startingPlayerName}}</bold> and continuing clockwise, until everyone has said a word.",
     "discussionInstructions2": "Once everyone is done, discuss who you think are the <bold>Masks</bold> or the <bold>Chameleon</bold>, then proceed to the voting phase.",
-    "discussionInstructions3": "In case of a voting tie, the tied players each reveal <bold>one word</bold>, then all players vote again based on the new hints.",
     "goToVote": "Go to vote",
+    "timer": "Discussion timer",
+    "timerRunning": "Timer running...",
+    "timeRemaining": "Time remaining:",
     "IForgotMyWord": "I forgot my word"
   },
   "forgotWordView": {
@@ -80,6 +121,7 @@
     "vote": "Vote",
     "startingPlayerThisRound": "Starting player this round: <player>{{playerName}}</player>",
     "whoIsBeingVotedOut": "Who is being voted out?",
+    "backToDiscussion": "Back to discussion",
     "voteFor": "Vote for {{playerName}}",
     "confirmVoteFor": "Confirm vote for <bold>{{playerName}}</bold>?"
   },
@@ -94,7 +136,8 @@
   },
   "gameEndView": {
     "gameOver": "Game Over",
-    "winner": "Winner:",
+    "winner_one": "Winner:",
+    "winner_other": "Winners:",
     "pointsAwarded": "Points awarded: {{points}}",
     "words": "Words",
     "playerRoles": "Player Roles"

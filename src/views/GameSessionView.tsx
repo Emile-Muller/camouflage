@@ -6,11 +6,17 @@ import { attributeRolesToPlayers } from "../gameLogic/roleAttribution";
 import { HomeScreenView } from "./HomeScreenView";
 import { getRandomPairs, type WordPair } from "../wordPairs/words";
 import { saveUsedWordPairId } from "../wordPairs/localStorage";
-import type { Player, RoleWinPoints, WinnerInfo } from "../gameLogic/types";
+import type {
+  Language,
+  Player,
+  RoleWinPoints,
+  WinnerInfo,
+} from "../gameLogic/types";
 import { RulesEditorView } from "./RulesEditorView";
 import i18n from "i18next";
+import { RulesView } from "./RulesView";
 
-type SessionState = "home" | "rules" | "setup" | "playing";
+type SessionState = "home" | "rules" | "rulesEditor" | "setup" | "playing";
 
 const TOTAL_PAIRS_PER_SESSION = 30;
 
@@ -25,6 +31,7 @@ export function GameSessionView() {
     chameleon: 5,
   });
   const [chameleonGuessPossible, setChameleonGuessPossible] = useState(true);
+  const [timerDuration, setTimerDuration] = useState(300);
 
   const [setup, setSetup] = useState(createDefaultSetup(5));
   const [players, setPlayers] = useState<Player[]>([]);
@@ -35,10 +42,10 @@ export function GameSessionView() {
 
   const startPlaying = () => {
     let wordPairs = sessionPairs;
-    const newLanguage = i18n.language;
+    const newLanguage: Language = i18n.language;
 
     if (sessionPairs.length == 0 || newLanguage != language) {
-      wordPairs = getRandomPairs(TOTAL_PAIRS_PER_SESSION);
+      wordPairs = getRandomPairs(TOTAL_PAIRS_PER_SESSION, newLanguage);
     }
 
     setLanguage(newLanguage);
@@ -61,9 +68,11 @@ export function GameSessionView() {
   const updateRules = (
     newRoleWinPoints: RoleWinPoints,
     newChameleonGuessPossible: boolean,
+    newTimerDuration: number,
   ) => {
     setRoleWinPoints(newRoleWinPoints);
     setChameleonGuessPossible(newChameleonGuessPossible);
+    setTimerDuration(newTimerDuration);
   };
 
   const confirmSetup = (setup: GameSetup) => {
@@ -84,22 +93,21 @@ export function GameSessionView() {
     startPlaying();
   };
 
-  const endGame = (winner: WinnerInfo) => {
+  const endGame = (winners: WinnerInfo[] | null) => {
+    if (!winners) return;
+
     setPlayers((prev) =>
       prev.map((player) => {
-        const shouldAwardPoints =
-          (winner.name === "chameleon" && player.role === "chameleon") ||
-          (winner.name === "mask" && player.role === "mask") ||
-          (winner.name === "authentic" && player.role === "authentic");
+        const winner = winners.find((winner) => winner.name === player.role);
 
-        return shouldAwardPoints
+        return winner
           ? { ...player, score: player.score + winner.points }
           : player;
       }),
     );
     setDoPlayersHaveScore(true);
 
-    saveUsedWordPairId(sessionPairs[currentGameIndex].id);
+    saveUsedWordPairId(sessionPairs[currentGameIndex].id, language);
     setCurrentGameIndex((i) => Math.min(i + 1, sessionPairs.length - 1));
     setState("home");
   };
@@ -114,17 +122,22 @@ export function GameSessionView() {
           doPlayersHaveScore={doPlayersHaveScore}
           players={players}
           onStart={startGame}
-          onEditRules={() => setState("rules")}
+          onRules={() => setState("rules")}
+          onEditRules={() => setState("rulesEditor")}
         />
       );
 
     case "rules":
+      return <RulesView onClose={() => setState("home")} />;
+
+    case "rulesEditor":
       return (
         <RulesEditorView
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
-          onConfirm={(newRoleWinPoints, newChameleonGuessPossible) => {
-            updateRules(newRoleWinPoints, newChameleonGuessPossible);
+          timerDuration={timerDuration}
+          onConfirm={(newRoleWinPoints, newChameleonGuessPossible, newTimerDuration) => {
+            updateRules(newRoleWinPoints, newChameleonGuessPossible, newTimerDuration);
             setState("home");
           }}
           onCancel={() => setState("home")}
@@ -149,6 +162,7 @@ export function GameSessionView() {
           wordPair={sessionPairs[currentGameIndex]}
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
+          timerDuration={timerDuration}
           onGameEnd={endGame}
         />
       );

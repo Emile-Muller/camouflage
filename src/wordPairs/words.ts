@@ -1,4 +1,5 @@
 import { getAvailableWordPairs, resetWordPairHistory } from "./localStorage";
+import type { Language } from "../gameLogic/types";
 import enWordPairs from "./wordPairsEnglish.json";
 import frWordPairs from "./wordPairsFrench.json";
 import i18n from "i18next";
@@ -9,16 +10,13 @@ export interface WordPair {
   mask: string;
 }
 
-interface WordPairEntry {
-  authentic: string;
-  mask: string;
-}
+type WordPairEntry = [string, string];
 
 type WordPairsJSON = Record<string, WordPairEntry>;
 
 const allWordPairs: Record<string, WordPairsJSON> = {
-  en: enWordPairs,
-  fr: frWordPairs,
+  en: enWordPairs as unknown as WordPairsJSON,
+  fr: frWordPairs as unknown as WordPairsJSON,
 };
 
 export function getAllWordPairs(): WordPair[] {
@@ -26,11 +24,17 @@ export function getAllWordPairs(): WordPair[] {
 
   const data: WordPairsJSON = allWordPairs[lang] || {};
 
-  const wordPairs: WordPair[] = Object.entries(data).map(([id, pair]) => ({
-    id,
-    authentic: pair.authentic,
-    mask: pair.mask,
-  }));
+  const wordPairs: WordPair[] = Object.entries(data).map(([id, pair]) => {
+    const [first, second] = pair;
+
+    const isSwapped = Math.random() < 0.5;
+
+    return {
+      id,
+      authentic: isSwapped ? second : first,
+      mask: isSwapped ? first : second,
+    };
+  });
 
   return wordPairs;
 }
@@ -51,14 +55,17 @@ function getUniqueRandomPairs(pairs: WordPair[], count: number): WordPair[] {
   return shuffled.slice(0, count);
 }
 
-export function getRandomPairs(pairsPerSession: number): WordPair[] {
+export function getRandomPairs(
+  pairsPerSession: number,
+  lang: Language,
+): WordPair[] {
   const allPairs: WordPair[] = getAllWordPairs();
 
   if (allPairs.length === 0) {
     return [];
   }
 
-  const available: WordPair[] = getAvailableWordPairs(allPairs);
+  const available: WordPair[] = getAvailableWordPairs(allPairs, lang);
 
   let selected: WordPair[] = [];
 
@@ -66,7 +73,7 @@ export function getRandomPairs(pairsPerSession: number): WordPair[] {
     selected = getUniqueRandomPairs(available, pairsPerSession);
   } else {
     selected = [...available];
-    resetWordPairHistory();
+    resetWordPairHistory(lang);
     const remainingPool = allPairs.filter(
       (pair) => !selected.some((p) => p.id === pair.id),
     );

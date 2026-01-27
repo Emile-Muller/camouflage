@@ -24,7 +24,8 @@ interface GameViewProps {
   wordPair: WordPair;
   roleWinPoints: RoleWinPoints;
   chameleonGuessPossible: boolean;
-  onGameEnd: (winner: WinnerInfo) => void;
+  timerDuration: number;
+  onGameEnd: (winners: WinnerInfo[] | null) => void;
 }
 
 export function GameView({
@@ -34,13 +35,14 @@ export function GameView({
   wordPair,
   roleWinPoints,
   chameleonGuessPossible,
+  timerDuration,
   onGameEnd,
 }: GameViewProps) {
   const [phase, setPhase] = useState<GamePhase>("wordReveal");
 
   const [startingPlayerIndex, setStartingPlayerIndex] = useState(0);
   const [eliminatedPlayer, setEliminatedPlayer] = useState<Player | null>(null);
-  const [winner, setWinner] = useState<WinnerInfo | null>(null);
+  const [winners, setWinners] = useState<WinnerInfo[] | null>(null);
 
   const startingPlayerName = players[startingPlayerIndex]?.name || "Unknown";
 
@@ -101,7 +103,7 @@ export function GameView({
     return 0;
   };
 
-  function checkGameEnd(): WinnerInfo | null {
+  function checkGameEnd(): WinnerInfo[] | null {
     const alive = getAlivePlayers();
 
     const authenticsAlive = alive.filter((p) => p.role === "authentic").length;
@@ -110,22 +112,25 @@ export function GameView({
 
     // All alive players are authentics
     if (authenticsAlive === alive.length) {
-      return { name: "authentic", points: roleWinPoints.authentic };
+      return [{ name: "authentic", points: roleWinPoints.authentic }];
     }
 
     // Chameleon + exactly one authentic (no masks)
     if (authenticsAlive === 1 && chameleonAlive && masksAlive === 0) {
-      return { name: "chameleon", points: roleWinPoints.chameleon };
+      return [{ name: "chameleon", points: roleWinPoints.chameleon }];
     }
 
     // Masks + exactly one authentic (no Chameleon)
-    if (authenticsAlive === 1 && masksAlive > 0 && !chameleonAlive) {
-      return { name: "mask", points: roleWinPoints.mask };
+    if (authenticsAlive === 1 && !chameleonAlive && masksAlive > 0) {
+      return [{ name: "mask", points: roleWinPoints.mask }];
     }
 
     // No authentics alive (e.g. mask + Chameleon)
-    if (authenticsAlive === 0 && masksAlive > 0) {
-      return { name: "mask", points: roleWinPoints.mask };
+    if (authenticsAlive === 0 && chameleonAlive && masksAlive > 0) {
+      return [
+        { name: "mask", points: roleWinPoints.mask },
+        { name: "chameleon", points: roleWinPoints.chameleon },
+      ];
     }
 
     return null;
@@ -155,7 +160,7 @@ export function GameView({
     if (eliminatedPlayer.role === "chameleon") {
       if (chameleonGuess) {
         // Chameleon guessed correctly -> instant win, otherwise eliminated
-        setWinner({ name: "chameleon", points: roleWinPoints.chameleon });
+        setWinners([{ name: "chameleon", points: roleWinPoints.chameleon }]);
         setPhase("gameEnd");
         return;
       }
@@ -170,7 +175,7 @@ export function GameView({
 
     const winner = checkGameEnd();
     if (winner) {
-      setWinner(winner);
+      setWinners(winner);
       setPhase("gameEnd");
       setEliminatedPlayer(null);
       return;
@@ -185,80 +190,77 @@ export function GameView({
   // -------------------------
   // Rendering
   // -------------------------
-  if (phase === "wordReveal") {
-    return (
-      <WordRevealView
-        setup={setup}
-        players={players}
-        setPlayers={setPlayers}
-        onComplete={() => {
-          setPlayers((prev) => getPlayerStartingOrder(prev));
-          setStartingPlayerIndex(0);
-          setPhase("discussion");
-        }}
-      />
-    );
-  }
+  switch (phase) {
+    case "wordReveal":
+      return (
+        <WordRevealView
+          setup={setup}
+          players={players}
+          setPlayers={setPlayers}
+          onComplete={() => {
+            setPlayers((prev) => getPlayerStartingOrder(prev));
+            setStartingPlayerIndex(0);
+            setPhase("discussion");
+          }}
+        />
+      );
 
-  if (phase === "discussion") {
-    return (
-      <DiscussionView
-        players={players}
-        startingPlayerIndex={startingPlayerIndex}
-        startingPlayerName={startingPlayerName}
-        onStartVote={() => setPhase("vote")}
-        onForgotWord={() => setPhase("forgotWord")}
-      />
-    );
-  }
+    case "discussion":
+      return (
+        <DiscussionView
+          players={players}
+          startingPlayerIndex={startingPlayerIndex}
+          startingPlayerName={startingPlayerName}
+          timerDuration={timerDuration}
+          onStartVote={() => setPhase("vote")}
+          onForgotWord={() => setPhase("forgotWord")}
+        />
+      );
 
-  if (phase === "forgotWord") {
-    return (
-      <ForgotWordView
-        players={players}
-        onBackToDiscussion={() => setPhase("discussion")}
-      />
-    );
-  }
+    case "forgotWord":
+      return (
+        <ForgotWordView
+          players={players}
+          onBackToDiscussion={() => setPhase("discussion")}
+        />
+      );
 
-  if (phase === "vote") {
-    return (
-      <VoteView
-        players={players}
-        startingPlayerName={startingPlayerName}
-        onConfirmVote={handleVote}
-      />
-    );
-  }
+    case "vote":
+      return (
+        <VoteView
+          players={players}
+          startingPlayerName={startingPlayerName}
+          onConfirmVote={handleVote}
+          backToDiscussion={() => setPhase("discussion")}
+        />
+      );
 
-  if (phase === "voteReveal" && eliminatedPlayer) {
-    return (
-      <VoteRevealView
-        eliminatedPlayer={eliminatedPlayer}
-        correctWord={wordPair.authentic}
-        chameleonGuessPossible={chameleonGuessPossible}
-        onContinue={(chameleonGuess) => {
-          handleContinueAfterReveal(chameleonGuess);
-        }}
-      />
-    );
-  }
+    case "voteReveal":
+      return (
+        <VoteRevealView
+          eliminatedPlayer={eliminatedPlayer}
+          correctWord={wordPair.authentic}
+          chameleonGuessPossible={chameleonGuessPossible}
+          onContinue={(chameleonGuess) => {
+            handleContinueAfterReveal(chameleonGuess);
+          }}
+        />
+      );
 
-  if (phase === "gameEnd" && winner) {
-    return (
-      <GameEndView
-        winner={winner}
-        players={players}
-        wordPair={wordPair}
-        onConfirm={() => {
-          if (onGameEnd) {
-            onGameEnd(winner);
+    case "gameEnd":
+      return (
+        <GameEndView
+          winners={winners}
+          players={players}
+          wordPair={wordPair}
+          onConfirm={() => {
+            onGameEnd(winners);
             setPhase("wordReveal");
-          }
-        }}
-      />
-    );
-  }
+          }}
+        />
+      );
 
-  return null;
+    default:
+      return null;
+  }
 }

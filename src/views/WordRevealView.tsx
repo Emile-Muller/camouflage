@@ -159,7 +159,9 @@ export function WordRevealView({
         {stage === "revealWord" && (
           <div className="space-y-4">
             <div className="bg-zinc-700 rounded-lg p-6 text-center">
-              <p className="text-sm text-zinc-400">{t("wordRevealView.yourWordIs")}</p>
+              <p className="text-sm text-zinc-400">
+                {t("wordRevealView.yourWordIs")}
+              </p>
               <button
                 onClick={handleNextStage}
                 className="mt-4 w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-8 text-lg font-bold transition-all"
@@ -174,7 +176,7 @@ export function WordRevealView({
         {stage === "confirm" && (
           <div className="space-y-4">
             {currentPlayer.role === "chameleon" ? (
-              <div className="bg-yellow-600 rounded-lg p-8 text-center">
+              <div className="bg-zinc-600 rounded-lg p-8 text-center">
                 <p className="text-3xl font-bold">{t("chameleon")}</p>
                 <p className="text-sm mt-4 opacity-80">
                   {t("wordRevealView.youDontKnowTheWord")}
@@ -182,7 +184,9 @@ export function WordRevealView({
               </div>
             ) : (
               <div className="bg-zinc-600 rounded-lg p-8 text-center">
-                <p className="text-sm opacity-80">{t("wordRevealView.yourWord")}</p>
+                <p className="text-sm opacity-80">
+                  {t("wordRevealView.yourWord")}
+                </p>
                 <p className="text-4xl font-bold mt-4">
                   {upperFirst(currentPlayer.word)}
                 </p>
