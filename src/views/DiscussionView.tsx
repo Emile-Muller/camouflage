@@ -1,7 +1,7 @@
 import { useTranslation, Trans } from "react-i18next";
 import { AliveRolesComponent } from "../components/AliveRolesComponent";
 import type { Player } from "../gameLogic/types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RulesView } from "./RulesView";
 
 type DiscussionState = "discussion" | "rules";
@@ -10,6 +10,7 @@ interface DiscussionViewProps {
   players: Player[];
   startingPlayerIndex: number;
   startingPlayerName: string;
+  timerDuration: number;
   onStartVote: () => void;
   onForgotWord: () => void;
 }
@@ -18,6 +19,7 @@ export function DiscussionView({
   players,
   startingPlayerIndex,
   startingPlayerName,
+  timerDuration,
   onStartVote,
   onForgotWord,
 }: DiscussionViewProps) {
@@ -25,7 +27,76 @@ export function DiscussionView({
 
   const [state, setState] = useState<DiscussionState>("discussion");
 
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startAudioRef = useRef<HTMLAudioElement | null>(null);
+  const intervalsAudioRef = useRef<HTMLAudioElement | null>(null);
+  const tickAudioRef = useRef<HTMLAudioElement | null>(null);
+  const endAudioRef = useRef<HTMLAudioElement | null>(null);
+
   const startingPlayer = players[startingPlayerIndex];
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      if (endAudioRef.current) {
+        const audio = endAudioRef.current;
+
+        audio.currentTime = 0;
+        audio.play().then(() => {
+          audio.onended = () => {
+            onStartVote();
+          };
+        });
+      } else {
+        onStartVote();
+      }
+    }
+  }, [timeLeft, onStartVote]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  };
+
+  const onTimerStart = () => {
+    // Prevent multiple timers
+    if (timerRef.current) return;
+
+    startAudioRef.current?.play();
+
+    setTimeLeft(timerDuration);
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev === null) return 0;
+
+        const next = prev - 1;
+
+        if ([30, 20, 10].includes(next)) {
+          intervalsAudioRef.current?.play();
+        } else if ([4, 3, 2, 1].includes(next)) {
+          tickAudioRef.current?.play();
+        }
+
+        if (prev <= 0) {
+          clearInterval(timerRef.current!);
+          timerRef.current = null;
+          return 0;
+        }
+        return next;
+      });
+    }, 1000);
+  };
 
   if (!startingPlayer) {
     return null;
@@ -78,18 +149,60 @@ export function DiscussionView({
             </button>
 
             <button
-              onClick={() => setState("rules")}
-              className="w-full mt-4 rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2"
+              onClick={onTimerStart}
+              disabled={timeLeft !== null}
+              className={`w-full mt-4 rounded-lg py-2 transition
+                ${
+                  timeLeft !== null
+                    ? "bg-zinc-700 cursor-not-allowed opacity-60"
+                    : "bg-zinc-600 hover:bg-zinc-500"
+                }
+              `}
             >
-              {t("howToPlay")}
+              {timeLeft !== null
+                ? t("discussionView.timerRunning")
+                : t("discussionView.timer")}
             </button>
 
-            <button
-              onClick={onForgotWord}
-              className="w-full mt-4 rounded-lg bg-teal-700 hover:bg-teal-600 py-2"
-            >
-              {t("discussionView.IForgotMyWord")}
-            </button>
+            {timeLeft !== null && (
+              <div className="mt-4 text-center">
+                <p className="text-sm text-zinc-400">
+                  {t("discussionView.timeRemaining")}
+                </p>
+                <p
+                  className={`text-2xl font-mono font-bold ${
+                    timeLeft <= 30 ? "text-red-400" : "text-zinc-100"
+                  }`}
+                >
+                  {formatTime(timeLeft)}
+                </p>
+              </div>
+            )}
+
+            <audio ref={startAudioRef} src="/sounds/start.wav" preload="auto" />
+            <audio
+              ref={intervalsAudioRef}
+              src="/sounds/intervals.wav"
+              preload="auto"
+            />
+            <audio ref={tickAudioRef} src="/sounds/tick.wav" preload="auto" />
+            <audio ref={endAudioRef} src="/sounds/end.wav" preload="auto" />
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setState("rules")}
+                className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2"
+              >
+                {t("howToPlay")}
+              </button>
+
+              <button
+                onClick={onForgotWord}
+                className="w-full rounded-lg bg-teal-700 hover:bg-teal-600 py-2"
+              >
+                {t("discussionView.IForgotMyWord")}
+              </button>
+            </div>
           </div>
         </div>
       );

@@ -24,6 +24,7 @@ interface GameViewProps {
   wordPair: WordPair;
   roleWinPoints: RoleWinPoints;
   chameleonGuessPossible: boolean;
+  timerDuration: number;
   onGameEnd: (winners: WinnerInfo[] | null) => void;
 }
 
@@ -34,6 +35,7 @@ export function GameView({
   wordPair,
   roleWinPoints,
   chameleonGuessPossible,
+  timerDuration,
   onGameEnd,
 }: GameViewProps) {
   const [phase, setPhase] = useState<GamePhase>("wordReveal");
@@ -209,6 +211,7 @@ export function GameView({
           players={players}
           startingPlayerIndex={startingPlayerIndex}
           startingPlayerName={startingPlayerName}
+          timerDuration={timerDuration}
           onStartVote={() => setPhase("vote")}
           onForgotWord={() => setPhase("forgotWord")}
         />

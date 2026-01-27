@@ -75,7 +75,8 @@
     "authenticWinPoints": "Authentic Win Points",
     "maskWinPoints": "Mask Win Points",
     "chameleonWinPoints": "Chameleon Win Points",
-    "chameleonCanGuessTheWord": "Chameleon Can Guess The Word"
+    "chameleonCanGuessTheWord": "Chameleon Can Guess The Word",
+    "timerDuration": "Timer duration (seconds)"
   },
   "playerSelectionView": {
     "gameSetup": "Game Setup"
@@ -104,6 +105,9 @@
     "discussionInstructions1": "Each player must say <bold>one word</bold>, starting from <bold>{{startingPlayerName}}</bold> and continuing clockwise, until everyone has said a word.",
     "discussionInstructions2": "Once everyone is done, discuss who you think are the <bold>Masks</bold> or the <bold>Chameleon</bold>, then proceed to the voting phase.",
     "goToVote": "Go to vote",
+    "timer": "Discussion timer",
+    "timerRunning": "Timer running...",
+    "timeRemaining": "Time remaining:",
     "IForgotMyWord": "I forgot my word"
   },
   "forgotWordView": {

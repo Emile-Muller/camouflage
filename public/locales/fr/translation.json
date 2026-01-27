@@ -75,7 +75,8 @@
     "authenticWinPoints": "Points gagnés par les Authentiques",
     "maskWinPoints": "Points gagnés par les Masques",
     "chameleonWinPoints": "Points gagnés par le Caméléon",
-    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot"
+    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot",
+    "timerDuration": "Durée du minuteur (secondes)"
   },
   "playerSelectionView": {
     "gameSetup": "Configuration du jeu"
@@ -104,6 +105,9 @@
     "discussionInstructions1": "Chaque joueur doit dire <bold>un mot</bold>, en commençant par <bold>{{startingPlayerName}}</bold> et en continuant dans le sens des aiguilles d'une montre, jusqu'à ce que chacun ait dit un mot.",
     "discussionInstructions2": "Une fois que tout le monde a terminé, débattez de qui, selon vous, sont les <bold>Masques</bold> ou le <bold>Caméléon</bold>, puis passez à la phase de vote.",
     "goToVote": "Passer au vote",
+    "timer": "Minuteur de discussion",
+    "timerRunning": "Minuteur en cours ...",
+    "timeRemaining": "Temps restant :",
     "IForgotMyWord": "J'ai oublié mon mot"
   },
   "forgotWordView": {
