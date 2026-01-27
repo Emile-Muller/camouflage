@@ -132,7 +132,8 @@
   },
   "gameEndView": {
     "gameOver": "Game Over",
-    "winner": "Winner:",
+    "winner_one": "Winner:",
+    "winner_other": "Winners:",
     "pointsAwarded": "Points awarded: {{points}}",
     "words": "Words",
     "playerRoles": "Player Roles"

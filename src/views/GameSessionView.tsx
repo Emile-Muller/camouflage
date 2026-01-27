@@ -90,17 +90,14 @@ export function GameSessionView() {
     startPlaying();
   };
 
-  const endGame = (winner: WinnerInfo | null) => {
-    if (winner === null) return;
+  const endGame = (winners: WinnerInfo[] | null) => {
+    if (!winners) return;
 
     setPlayers((prev) =>
       prev.map((player) => {
-        const shouldAwardPoints =
-          (winner.name === "chameleon" && player.role === "chameleon") ||
-          (winner.name === "mask" && player.role === "mask") ||
-          (winner.name === "authentic" && player.role === "authentic");
+        const winner = winners.find((winner) => winner.name === player.role);
 
-        return shouldAwardPoints
+        return winner
           ? { ...player, score: player.score + winner.points }
           : player;
       }),

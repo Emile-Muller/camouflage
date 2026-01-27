@@ -132,7 +132,8 @@
   },
   "gameEndView": {
     "gameOver": "Fin de la partie",
-    "winner": "Gagnant :",
+    "winner_one": "Gagnant :",
+    "winner_other": "Gagnants :",
     "pointsAwarded": "Points remportés : {{points}}",
     "words": "Mots",
     "playerRoles": "Rôles des joueurs"

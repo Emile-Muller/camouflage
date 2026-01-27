@@ -2,24 +2,24 @@ import { upperFirst } from "../utils/utils";
 import { ROLES } from "../constants/roles";
 import type { WordPair } from "../wordPairs/words";
 import type { Player, Role, WinnerInfo } from "../gameLogic/types";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 interface GameEndViewProps {
-  winner: WinnerInfo | null;
+  winners: WinnerInfo[] | null;
   players: Player[];
   wordPair: WordPair;
   onConfirm: () => void;
 }
 
 export function GameEndView({
-  winner,
+  winners,
   players,
   wordPair,
   onConfirm,
 }: GameEndViewProps) {
   const { t } = useTranslation();
 
-  if (winner === null) return;
+  if (winners === null) return;
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 flex items-center justify-center p-4">
@@ -30,19 +30,23 @@ export function GameEndView({
 
         <div className="space-y-1">
           <div className="text-lg">
-            {t("gameEndView.winner")}{" "}
-            <span className="font-semibold">
-              <p className="flex items-center justify-center gap-1">
-                <span>{ROLES[winner.name as Role].icon}</span>
-                <span>{t(`roles.${winner.name}`)}</span>
-              </p>
-            </span>
-          </div>
-          <p className="text-sm text-zinc-300">
-            {t("gameEndView.pointsAwarded", {
-              points: winner.points,
+            <Trans i18nKey="gameEndView.winner" count={winners.length} />{" "}
+            {winners.map((winner) => {
+              return (
+                <span key={winner.name} className="font-semibold">
+                  <p className="flex items-center justify-center gap-1">
+                    <span>{ROLES[winner.name as Role].icon}</span>
+                    <span>{t(`roles.${winner.name}`)}</span>
+                  </p>
+                  <p className="text-sm text-zinc-300">
+                    {t("gameEndView.pointsAwarded", {
+                      points: winner.points,
+                    })}
+                  </p>
+                </span>
+              );
             })}
-          </p>
+          </div>
         </div>
 
         {/* Word reveal */}
