@@ -84,7 +84,9 @@ export function GameSessionView() {
     startPlaying();
   };
 
-  const endGame = (winner: WinnerInfo) => {
+  const endGame = (winner: WinnerInfo | null) => {
+    if (winner === null) return;
+    
     setPlayers((prev) =>
       prev.map((player) => {
         const shouldAwardPoints =

@@ -81,6 +81,7 @@
     "vote": "Vote",
     "startingPlayerThisRound": "Starting player this round: <player>{{playerName}}</player>",
     "whoIsBeingVotedOut": "Who is being voted out?",
+    "backToDiscussion": "Back to discussion",
     "voteFor": "Vote for {{playerName}}",
     "confirmVoteFor": "Confirm vote for <bold>{{playerName}}</bold>?"
   },

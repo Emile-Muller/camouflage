@@ -225,6 +225,7 @@ export function GameView({
           players={players}
           startingPlayerName={startingPlayerName}
           onConfirmVote={handleVote}
+          backToDiscussion={() => setPhase("discussion")}
         />
       );
 
@@ -252,7 +253,7 @@ export function GameView({
           }}
         />
       );
-      
+
     default:
       return null;
   }

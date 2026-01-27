@@ -81,6 +81,7 @@
     "vote": "Vote",
     "startingPlayerThisRound": "Joueur qui a commencé le round: <player>{{playerName}}</player>",
     "whoIsBeingVotedOut": "Qui est éliminé par le vote ?",
+    "backToDiscussion": "Retour à la discussion",
     "voteFor": "Voter pour {{playerName}}",
     "confirmVoteFor": "Confirmer le vote pour <bold>{{playerName}}</bold> ?"
   },

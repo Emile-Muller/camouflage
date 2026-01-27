@@ -7,12 +7,14 @@ interface VoteViewProps {
   players: Player[];
   startingPlayerName: string;
   onConfirmVote: (votedPlayer: Player) => void;
+  backToDiscussion: () => void;
 }
 
 export function VoteView({
   players,
   startingPlayerName,
   onConfirmVote,
+  backToDiscussion,
 }: VoteViewProps) {
   const { t } = useTranslation();
 
@@ -124,6 +126,13 @@ export function VoteView({
             )}
           </div>
         )}
+
+        <button
+          onClick={backToDiscussion}
+          className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2 text-md"
+        >
+          {t("voteView.backToDiscussion")}
+        </button>
       </div>
     </div>
   );
