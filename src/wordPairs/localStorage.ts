@@ -1,5 +1,4 @@
-import type { WordPair } from "./words";
-import type { Language } from "../gameLogic/types";
+import type { Language, WordPair } from "../gameLogic/types";
 
 const STORAGE_KEYS = {
   USED_WORD_PAIRS: "USED_WORD_PAIRS",
@@ -29,7 +28,10 @@ export function saveUsedWordPairId(id: string, lang: Language) {
   }
 }
 
-export function getAvailableWordPairs(allPairs: WordPair[], lang: Language): WordPair[] {
+export function getAvailableWordPairs(
+  allPairs: WordPair[],
+  lang: Language,
+): WordPair[] {
   const usedIds = new Set(loadUsedWordPairIds(lang));
   return allPairs.filter((pair) => !usedIds.has(pair.id));
 }
