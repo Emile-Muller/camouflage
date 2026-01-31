@@ -1,18 +1,8 @@
 import { getAvailableWordPairs, resetWordPairHistory } from "./localStorage";
-import type { Language } from "../gameLogic/types";
+import type { Language, WordPair, WordPairsJSON } from "../gameLogic/types";
 import enWordPairs from "./wordPairsEnglish.json";
 import frWordPairs from "./wordPairsFrench.json";
 import i18n from "i18next";
-
-export interface WordPair {
-  id: string;
-  authentic: string;
-  mask: string;
-}
-
-type WordPairEntry = [string, string];
-
-type WordPairsJSON = Record<string, WordPairEntry>;
 
 const allWordPairs: Record<string, WordPairsJSON> = {
   en: enWordPairs as unknown as WordPairsJSON,

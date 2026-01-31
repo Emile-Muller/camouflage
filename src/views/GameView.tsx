@@ -6,8 +6,12 @@ import { VoteView } from "./VoteView";
 import { VoteRevealView } from "./VoteRevealView";
 import { GameEndView } from "./GameEndView";
 import type { GameSetup } from "../gameLogic/gameSetup";
-import type { Player, RoleWinPoints, WinnerInfo } from "../gameLogic/types";
-import type { WordPair } from "../wordPairs/words";
+import type {
+  Player,
+  RoleWinPoints,
+  WinnerInfo,
+  WordPair,
+} from "../gameLogic/types";
 
 type GamePhase =
   | "wordReveal"

@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
+git update-index --again
+
+WORDPAIRS_CHANGED=$(git diff --cached --name-only --diff-filter=ACMR -- '*.json' | grep 'wordPairs')
+if [ -n "$WORDPAIRS_CHANGED" ]; then
+  echo "Running validate-wordpairs because JSON changed..."
+  npm run validate-wordpairs
+else
+  echo "No wordPairs JSON changes, skipping validate-wordpairs."
+fi

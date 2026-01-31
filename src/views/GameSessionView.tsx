@@ -4,13 +4,14 @@ import { PlayerSelectionView } from "./PlayerSelectionView";
 import { GameView } from "./GameView";
 import { attributeRolesToPlayers } from "../gameLogic/roleAttribution";
 import { HomeScreenView } from "./HomeScreenView";
-import { getRandomPairs, type WordPair } from "../wordPairs/words";
+import { getRandomPairs } from "../wordPairs/words";
 import { saveUsedWordPairId } from "../wordPairs/localStorage";
 import type {
   Language,
   Player,
   RoleWinPoints,
   WinnerInfo,
+  WordPair,
 } from "../gameLogic/types";
 import { RulesEditorView } from "./RulesEditorView";
 import i18n from "i18next";
@@ -136,8 +137,16 @@ export function GameSessionView() {
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
           timerDuration={timerDuration}
-          onConfirm={(newRoleWinPoints, newChameleonGuessPossible, newTimerDuration) => {
-            updateRules(newRoleWinPoints, newChameleonGuessPossible, newTimerDuration);
+          onConfirm={(
+            newRoleWinPoints,
+            newChameleonGuessPossible,
+            newTimerDuration,
+          ) => {
+            updateRules(
+              newRoleWinPoints,
+              newChameleonGuessPossible,
+              newTimerDuration,
+            );
             setState("home");
           }}
           onCancel={() => setState("home")}

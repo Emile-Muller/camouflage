@@ -20,4 +20,14 @@ export type WinnerInfo = {
   points: number;
 };
 
+export interface WordPair {
+  id: string;
+  authentic: string;
+  mask: string;
+}
+
+export type WordPairEntry = [string, string];
+
+export type WordPairsJSON = Record<string, WordPairEntry>;
+
 export type Language = string;
