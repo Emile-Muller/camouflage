@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { WordRevealView } from "./WordRevealView";
 import { DiscussionView } from "./DiscussionView";
-import { ForgotWordView } from "./ForgotWordView";
 import { VoteView } from "./VoteView";
 import { VoteRevealView } from "./VoteRevealView";
 import { GameEndView } from "./GameEndView";
@@ -16,7 +15,6 @@ import type {
 type GamePhase =
   | "wordReveal"
   | "discussion"
-  | "forgotWord"
   | "vote"
   | "voteReveal"
   | "gameEnd";
@@ -220,15 +218,6 @@ export function GameView({
           timerDuration={timerDuration}
           setTimerDuration={setTimerDuration}
           onStartVote={() => setPhase("vote")}
-          onForgotWord={() => setPhase("forgotWord")}
-        />
-      );
-
-    case "forgotWord":
-      return (
-        <ForgotWordView
-          players={players}
-          onBackToDiscussion={() => setPhase("discussion")}
         />
       );
 

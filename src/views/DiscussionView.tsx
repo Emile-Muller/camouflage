@@ -4,9 +4,10 @@ import type { Player } from "../gameLogic/types";
 import { useEffect, useRef, useState } from "react";
 import { RulesView } from "./RulesView";
 import { TimerEditorView } from "./TimerEditorView";
+import { ForgotWordView } from "./ForgotWordView";
 import { formatTime } from "../utils/utils";
 
-type DiscussionState = "discussion" | "rules" | "timerEdit";
+type DiscussionState = "discussion" | "rules" | "timerEdit" | "forgotWord";
 
 interface DiscussionViewProps {
   players: Player[];
@@ -15,7 +16,6 @@ interface DiscussionViewProps {
   timerDuration: number;
   setTimerDuration: React.Dispatch<React.SetStateAction<number>>;
   onStartVote: () => void;
-  onForgotWord: () => void;
 }
 
 export function DiscussionView({
@@ -25,7 +25,6 @@ export function DiscussionView({
   timerDuration,
   setTimerDuration,
   onStartVote,
-  onForgotWord,
 }: DiscussionViewProps) {
   const { t } = useTranslation();
 
@@ -40,39 +39,8 @@ export function DiscussionView({
 
   const startingPlayer = players[startingPlayerIndex];
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      if (endAudioRef.current) {
-        const audio = endAudioRef.current;
-
-        audio.currentTime = 0;
-        audio.play().then(() => {
-          audio.onended = () => {
-            onStartVote();
-          };
-        });
-      } else {
-        onStartVote();
-      }
-    }
-  }, [timeLeft, onStartVote]);
-
-  const onTimerStart = () => {
-    // Prevent multiple timers
+  const startInterval = () => {
     if (timerRef.current) return;
-
-    startAudioRef.current?.play();
-
-    setTimeLeft(timerDuration);
 
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -86,14 +54,72 @@ export function DiscussionView({
           tickAudioRef.current?.play();
         }
 
-        if (prev <= 0) {
+        if (next <= 0) {
           clearInterval(timerRef.current!);
           timerRef.current = null;
           return 0;
         }
+
         return next;
       });
     }, 1000);
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
+  // Pause when leaving discussion
+  useEffect(() => {
+    if (state !== "discussion" && timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, [state]);
+
+  // Resume timer if returning to discussion
+  useEffect(() => {
+    if (
+      state === "discussion" &&
+      timeLeft !== null &&
+      timeLeft > 0 &&
+      !timerRef.current
+    ) {
+      startInterval();
+    }
+  }, [state, timeLeft]);
+
+  // Handle timer reaching zero
+  useEffect(() => {
+    if (timeLeft === 0) {
+      if (endAudioRef.current) {
+        const audio = endAudioRef.current;
+        audio.currentTime = 0;
+
+        audio.play().then(() => {
+          audio.onended = onStartVote;
+        });
+      } else {
+        onStartVote();
+      }
+    }
+  }, [timeLeft, onStartVote]);
+
+  const onTimerStart = () => {
+    // prevent duplicates
+    if (timerRef.current) return;
+
+    startAudioRef.current?.play();
+
+    setTimeLeft((prev) => prev ?? timerDuration);
+
+    startInterval();
   };
 
   if (!startingPlayer) {
@@ -201,7 +227,7 @@ export function DiscussionView({
               </button>
 
               <button
-                onClick={onForgotWord}
+                onClick={() => setState("forgotWord")}
                 className="w-full rounded-lg bg-teal-700 hover:bg-teal-600 py-2"
               >
                 {t("discussionView.IForgotMyWord")}
@@ -223,6 +249,14 @@ export function DiscussionView({
             setState("discussion");
           }}
           onCancel={() => setState("discussion")}
+        />
+      );
+
+    case "forgotWord":
+      return (
+        <ForgotWordView
+          players={players}
+          onBackToDiscussion={() => setState("discussion")}
         />
       );
   }
