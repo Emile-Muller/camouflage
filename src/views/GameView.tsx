@@ -58,6 +58,12 @@ export function GameView({
   }
 
   function getPlayerStartingOrder(playersList: Player[]): Player[] {
+    if (playersList.length === 0) return [];
+
+    if (playersList.length === 3) {
+      return [...playersList.slice(1), ...playersList.slice(0, 1)];
+    }
+
     const eligibleStartingIndices = playersList
       .map((player, index) => ({ player, index }))
       .filter(({ player, index }) => {
