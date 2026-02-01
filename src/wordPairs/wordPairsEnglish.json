@@ -62,7 +62,7 @@
   "cry|shout": ["cry", "shout"],
   "cup|glass": ["cup", "glass"],
   "current|wind": ["current", "wind"],
-  "dance|run": ["dance", "run"],
+  "sprint|run": ["sprint", "run"],
   "deer|dog": ["deer", "dog"],
   "descend|fall": ["descend", "fall"],
   "desk|furniture": ["desk", "furniture"],
