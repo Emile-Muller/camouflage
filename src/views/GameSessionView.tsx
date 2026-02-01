@@ -69,11 +69,9 @@ export function GameSessionView() {
   const updateRules = (
     newRoleWinPoints: RoleWinPoints,
     newChameleonGuessPossible: boolean,
-    newTimerDuration: number,
   ) => {
     setRoleWinPoints(newRoleWinPoints);
     setChameleonGuessPossible(newChameleonGuessPossible);
-    setTimerDuration(newTimerDuration);
   };
 
   const confirmSetup = (setup: GameSetup) => {
@@ -136,17 +134,8 @@ export function GameSessionView() {
         <RulesEditorView
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
-          timerDuration={timerDuration}
-          onConfirm={(
-            newRoleWinPoints,
-            newChameleonGuessPossible,
-            newTimerDuration,
-          ) => {
-            updateRules(
-              newRoleWinPoints,
-              newChameleonGuessPossible,
-              newTimerDuration,
-            );
+          onConfirm={(newRoleWinPoints, newChameleonGuessPossible) => {
+            updateRules(newRoleWinPoints, newChameleonGuessPossible);
             setState("home");
           }}
           onCancel={() => setState("home")}
@@ -172,6 +161,7 @@ export function GameSessionView() {
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
           timerDuration={timerDuration}
+          setTimerDuration={setTimerDuration}
           onGameEnd={endGame}
         />
       );

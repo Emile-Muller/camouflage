@@ -5,11 +5,9 @@ import { useTranslation } from "react-i18next";
 interface RulesEditorViewProps {
   roleWinPoints: RoleWinPoints;
   chameleonGuessPossible: boolean;
-  timerDuration: number;
   onConfirm: (
     roleWinPoints: RoleWinPoints,
     chameleonGuessPossible: boolean,
-    timerDuration: number,
   ) => void;
   onCancel: () => void;
 }
@@ -17,7 +15,6 @@ interface RulesEditorViewProps {
 export function RulesEditorView({
   roleWinPoints,
   chameleonGuessPossible,
-  timerDuration,
   onConfirm,
   onCancel,
 }: RulesEditorViewProps) {
@@ -31,9 +28,6 @@ export function RulesEditorView({
 
   const [updatedChameleonGuessPossible, setUpdatedChameleonGuessPossible] =
     useState(chameleonGuessPossible);
-
-  const [updatedTimerDuration, setUpdatedTimerDuration] =
-    useState(timerDuration);
 
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-100 flex items-center justify-center">
@@ -145,26 +139,6 @@ export function RulesEditorView({
           />
         </div>
 
-        {/* Timer duration */}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-sm uppercase tracking-wide text-zinc-400">
-              {t("rulesEditorView.timerDuration")}
-            </span>
-            <span className="text-lg font-bold">{updatedTimerDuration}</span>
-          </div>
-
-          <input
-            type="range"
-            min={10}
-            max={600}
-            step={5}
-            value={updatedTimerDuration}
-            onChange={(e) => setUpdatedTimerDuration(Number(e.target.value))}
-            className="w-full accent-emerald-500 cursor-pointer"
-          />
-        </div>
-
         {/* Cancel button */}
         <div className="flex gap-3">
           <button
@@ -177,11 +151,7 @@ export function RulesEditorView({
           {/* Confirm button */}
           <button
             onClick={() =>
-              onConfirm(
-                updatedRoleWinPoints,
-                updatedChameleonGuessPossible,
-                updatedTimerDuration,
-              )
+              onConfirm(updatedRoleWinPoints, updatedChameleonGuessPossible)
             }
             className="flex-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 py-2 font-semibold"
           >

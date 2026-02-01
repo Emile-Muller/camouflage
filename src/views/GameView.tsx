@@ -29,6 +29,7 @@ interface GameViewProps {
   roleWinPoints: RoleWinPoints;
   chameleonGuessPossible: boolean;
   timerDuration: number;
+  setTimerDuration: React.Dispatch<React.SetStateAction<number>>;
   onGameEnd: (winners: WinnerInfo[] | null) => void;
 }
 
@@ -40,6 +41,7 @@ export function GameView({
   roleWinPoints,
   chameleonGuessPossible,
   timerDuration,
+  setTimerDuration,
   onGameEnd,
 }: GameViewProps) {
   const [phase, setPhase] = useState<GamePhase>("wordReveal");
@@ -216,6 +218,7 @@ export function GameView({
           startingPlayerIndex={startingPlayerIndex}
           startingPlayerName={startingPlayerName}
           timerDuration={timerDuration}
+          setTimerDuration={setTimerDuration}
           onStartVote={() => setPhase("vote")}
           onForgotWord={() => setPhase("forgotWord")}
         />

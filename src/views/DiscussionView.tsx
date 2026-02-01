@@ -3,14 +3,17 @@ import { AliveRolesComponent } from "../components/AliveRolesComponent";
 import type { Player } from "../gameLogic/types";
 import { useEffect, useRef, useState } from "react";
 import { RulesView } from "./RulesView";
+import { TimerEditorView } from "./TimerEditorView";
+import { formatTime } from "../utils/utils";
 
-type DiscussionState = "discussion" | "rules";
+type DiscussionState = "discussion" | "rules" | "timerEdit";
 
 interface DiscussionViewProps {
   players: Player[];
   startingPlayerIndex: number;
   startingPlayerName: string;
   timerDuration: number;
+  setTimerDuration: React.Dispatch<React.SetStateAction<number>>;
   onStartVote: () => void;
   onForgotWord: () => void;
 }
@@ -20,6 +23,7 @@ export function DiscussionView({
   startingPlayerIndex,
   startingPlayerName,
   timerDuration,
+  setTimerDuration,
   onStartVote,
   onForgotWord,
 }: DiscussionViewProps) {
@@ -61,12 +65,6 @@ export function DiscussionView({
       }
     }
   }, [timeLeft, onStartVote]);
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
 
   const onTimerStart = () => {
     // Prevent multiple timers
@@ -148,21 +146,27 @@ export function DiscussionView({
               {t("discussionView.goToVote")}
             </button>
 
-            <button
-              onClick={onTimerStart}
-              disabled={timeLeft !== null}
-              className={`w-full mt-4 rounded-lg py-2 transition
-                ${
-                  timeLeft !== null
-                    ? "bg-zinc-700 cursor-not-allowed opacity-60"
-                    : "bg-zinc-600 hover:bg-zinc-500"
-                }
-              `}
-            >
-              {timeLeft !== null
-                ? t("discussionView.timerRunning")
-                : t("discussionView.timer")}
-            </button>
+            {timeLeft === null && (
+              <div className="flex gap-3">
+                <button
+                  onClick={onTimerStart}
+                  className="flex-[3] w-full mt-4 rounded-lg py-2 transition bg-zinc-600 hover:bg-zinc-500"
+                >
+                  {"▶️ "}
+                  {t("discussionView.startTimer", {
+                    formattedTime: formatTime(timerDuration),
+                  })}
+                </button>
+
+                <button
+                  onClick={() => setState("timerEdit")}
+                  className="flex-[1] w-full mt-4 rounded-lg py-2 transition bg-zinc-600 hover:bg-zinc-500"
+                >
+                  {"⚙️ "}
+                  {t("discussionView.timerEdit")}
+                </button>
+              </div>
+            )}
 
             {timeLeft !== null && (
               <div className="mt-4 text-center">
@@ -209,5 +213,17 @@ export function DiscussionView({
 
     case "rules":
       return <RulesView onClose={() => setState("discussion")} />;
+
+    case "timerEdit":
+      return (
+        <TimerEditorView
+          timerDuration={timerDuration}
+          onConfirm={(newTimerDuration) => {
+            setTimerDuration(newTimerDuration);
+            setState("discussion");
+          }}
+          onCancel={() => setState("discussion")}
+        />
+      );
   }
 }
