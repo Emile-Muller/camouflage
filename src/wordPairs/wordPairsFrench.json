@@ -42,10 +42,7 @@
   "bureau|meuble": ["bureau", "meuble"],
   "bureau|travail": ["bureau", "travail"],
   "camion|voiture": ["camion", "voiture"],
-  "Capitaine Haddock|Dupond et Dupont": [
-    "Capitaine Haddock",
-    "Dupond et Dupont"
-  ],
+  "Capitaine Haddock|Dupond et Dupont": ["Capitaine Haddock", "Dupond et Dupont"],
   "carton|papier": ["carton", "papier"],
   "cerf|chien": ["cerf", "chien"],
   "chaise|fauteuil": ["chaise", "fauteuil"],
@@ -69,8 +66,8 @@
   "conduire|naviguer": ["conduire", "naviguer"],
   "corbeau|pie": ["corbeau", "pie"],
   "coude|poignet": ["coude", "poignet"],
-  "courir|sprinter": ["courir", "sprinter"],
   "courir|marcher": ["courir", "marcher"],
+  "courir|sprinter": ["courir", "sprinter"],
   "crayon|feutre": ["crayon", "feutre"],
   "crayon|stylo": ["crayon", "stylo"],
   "crier|pleurer": ["crier", "pleurer"],

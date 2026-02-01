@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 import { fileURLToPath } from "url";
 import type { WordPairEntry, WordPairsJSON } from "../src/gameLogic/types";
 
@@ -56,7 +57,13 @@ function validateFile(filePath: string) {
 
   writeJSONSingleLine(filePath, outputObj);
 
-  console.log(`✅ ${filePath} validated : ${outputObj.length} pairs`);
+  if (files.length > 0) {
+    const filesToAdd = files.map((f) => `"${f}"`).join(" ");
+    execSync(`git add ${filesToAdd}`, { stdio: "inherit" });
+    console.log("Staged updated wordPairs JSON files");
+  }
+
+  console.log(`✅ ${filePath} validated`);
 }
 
 files.forEach(validateFile);
