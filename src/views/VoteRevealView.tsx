@@ -28,10 +28,20 @@ export function VoteRevealView({
 
   const isChameleon = eliminatedPlayer!.role === "chameleon";
 
+  const normalize = (str: string) =>
+    str
+      .normalize("NFD") // Decompose characters (é → e + ´)
+      .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+      .replace(/[^\w\s]|_/g, "") // Remove punctuation
+      .replace(/\s+/g, " ") // Ignore multiple spaces
+      .toLowerCase()
+      .trim()
+      .replace(/s$/i, ""); // Remove trailing "s" for simple plural handling
+
   const handleConfirmGuess = () => {
     if (!guess.trim()) return;
 
-    const isCorrect = guess.trim().toLowerCase() === correctWord.toLowerCase();
+    const isCorrect = normalize(guess) === normalize(correctWord);
 
     setGuessResult(isCorrect ? "correct" : "wrong");
   };
