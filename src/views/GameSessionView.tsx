@@ -4,17 +4,19 @@ import { PlayerSelectionView } from "./PlayerSelectionView";
 import { GameView } from "./GameView";
 import { attributeRolesToPlayers } from "../gameLogic/roleAttribution";
 import { HomeScreenView } from "./HomeScreenView";
-import { getRandomPairs, type WordPair } from "../wordPairs/words";
+import { getRandomPairs } from "../wordPairs/words";
 import { saveUsedWordPairId } from "../wordPairs/localStorage";
 import type {
   Language,
   Player,
   RoleWinPoints,
   WinnerInfo,
+  WordPair,
 } from "../gameLogic/types";
 import { RulesEditorView } from "./RulesEditorView";
 import i18n from "i18next";
 import { RulesView } from "./RulesView";
+import { useWakeLockWhilePlaying } from "../wakeLock/useWakeLockWhilePlaying";
 
 type SessionState = "home" | "rules" | "rulesEditor" | "setup" | "playing";
 
@@ -68,11 +70,9 @@ export function GameSessionView() {
   const updateRules = (
     newRoleWinPoints: RoleWinPoints,
     newChameleonGuessPossible: boolean,
-    newTimerDuration: number,
   ) => {
     setRoleWinPoints(newRoleWinPoints);
     setChameleonGuessPossible(newChameleonGuessPossible);
-    setTimerDuration(newTimerDuration);
   };
 
   const confirmSetup = (setup: GameSetup) => {
@@ -115,6 +115,8 @@ export function GameSessionView() {
   // -------------------------
   // Rendering
   // -------------------------
+  useWakeLockWhilePlaying(state === "playing");
+
   switch (state) {
     case "home":
       return (
@@ -135,9 +137,8 @@ export function GameSessionView() {
         <RulesEditorView
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
-          timerDuration={timerDuration}
-          onConfirm={(newRoleWinPoints, newChameleonGuessPossible, newTimerDuration) => {
-            updateRules(newRoleWinPoints, newChameleonGuessPossible, newTimerDuration);
+          onConfirm={(newRoleWinPoints, newChameleonGuessPossible) => {
+            updateRules(newRoleWinPoints, newChameleonGuessPossible);
             setState("home");
           }}
           onCancel={() => setState("home")}
@@ -163,6 +164,7 @@ export function GameSessionView() {
           roleWinPoints={roleWinPoints}
           chameleonGuessPossible={chameleonGuessPossible}
           timerDuration={timerDuration}
+          setTimerDuration={setTimerDuration}
           onGameEnd={endGame}
         />
       );

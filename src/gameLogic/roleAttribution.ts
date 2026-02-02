@@ -1,6 +1,5 @@
-import { type WordPair } from "../wordPairs/words";
 import type { GameSetup } from "./gameSetup";
-import type { Player, Role } from "./types";
+import type { Player, Role, WordPair } from "./types";
 
 function shuffle<T>(array: T[]): T[] {
   return [...array].sort(() => Math.random() - 0.5);

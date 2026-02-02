@@ -1,18 +1,20 @@
 import { useState } from "react";
 import { WordRevealView } from "./WordRevealView";
 import { DiscussionView } from "./DiscussionView";
-import { ForgotWordView } from "./ForgotWordView";
 import { VoteView } from "./VoteView";
 import { VoteRevealView } from "./VoteRevealView";
 import { GameEndView } from "./GameEndView";
 import type { GameSetup } from "../gameLogic/gameSetup";
-import type { Player, RoleWinPoints, WinnerInfo } from "../gameLogic/types";
-import type { WordPair } from "../wordPairs/words";
+import type {
+  Player,
+  RoleWinPoints,
+  WinnerInfo,
+  WordPair,
+} from "../gameLogic/types";
 
 type GamePhase =
   | "wordReveal"
   | "discussion"
-  | "forgotWord"
   | "vote"
   | "voteReveal"
   | "gameEnd";
@@ -25,6 +27,7 @@ interface GameViewProps {
   roleWinPoints: RoleWinPoints;
   chameleonGuessPossible: boolean;
   timerDuration: number;
+  setTimerDuration: React.Dispatch<React.SetStateAction<number>>;
   onGameEnd: (winners: WinnerInfo[] | null) => void;
 }
 
@@ -36,6 +39,7 @@ export function GameView({
   roleWinPoints,
   chameleonGuessPossible,
   timerDuration,
+  setTimerDuration,
   onGameEnd,
 }: GameViewProps) {
   const [phase, setPhase] = useState<GamePhase>("wordReveal");
@@ -54,6 +58,12 @@ export function GameView({
   }
 
   function getPlayerStartingOrder(playersList: Player[]): Player[] {
+    if (playersList.length === 0) return [];
+
+    if (playersList.length === 3) {
+      return [...playersList.slice(1), ...playersList.slice(0, 1)];
+    }
+
     const eligibleStartingIndices = playersList
       .map((player, index) => ({ player, index }))
       .filter(({ player, index }) => {
@@ -212,16 +222,8 @@ export function GameView({
           startingPlayerIndex={startingPlayerIndex}
           startingPlayerName={startingPlayerName}
           timerDuration={timerDuration}
+          setTimerDuration={setTimerDuration}
           onStartVote={() => setPhase("vote")}
-          onForgotWord={() => setPhase("forgotWord")}
-        />
-      );
-
-    case "forgotWord":
-      return (
-        <ForgotWordView
-          players={players}
-          onBackToDiscussion={() => setPhase("discussion")}
         />
       );
 

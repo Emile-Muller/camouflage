@@ -1,7 +1,6 @@
 import { upperFirst } from "../utils/utils";
 import { ROLES } from "../constants/roles";
-import type { WordPair } from "../wordPairs/words";
-import type { Player, Role, WinnerInfo } from "../gameLogic/types";
+import type { Player, Role, WinnerInfo, WordPair } from "../gameLogic/types";
 import { Trans, useTranslation } from "react-i18next";
 
 interface GameEndViewProps {

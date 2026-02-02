@@ -3,16 +3,19 @@ import { AliveRolesComponent } from "../components/AliveRolesComponent";
 import type { Player } from "../gameLogic/types";
 import { useEffect, useRef, useState } from "react";
 import { RulesView } from "./RulesView";
+import { TimerEditorView } from "./TimerEditorView";
+import { ForgotWordView } from "./ForgotWordView";
+import { formatTime } from "../utils/utils";
 
-type DiscussionState = "discussion" | "rules";
+type DiscussionState = "discussion" | "rules" | "timerEdit" | "forgotWord";
 
 interface DiscussionViewProps {
   players: Player[];
   startingPlayerIndex: number;
   startingPlayerName: string;
   timerDuration: number;
+  setTimerDuration: React.Dispatch<React.SetStateAction<number>>;
   onStartVote: () => void;
-  onForgotWord: () => void;
 }
 
 export function DiscussionView({
@@ -20,8 +23,8 @@ export function DiscussionView({
   startingPlayerIndex,
   startingPlayerName,
   timerDuration,
+  setTimerDuration,
   onStartVote,
-  onForgotWord,
 }: DiscussionViewProps) {
   const { t } = useTranslation();
 
@@ -36,45 +39,8 @@ export function DiscussionView({
 
   const startingPlayer = players[startingPlayerIndex];
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (timeLeft === 0) {
-      if (endAudioRef.current) {
-        const audio = endAudioRef.current;
-
-        audio.currentTime = 0;
-        audio.play().then(() => {
-          audio.onended = () => {
-            onStartVote();
-          };
-        });
-      } else {
-        onStartVote();
-      }
-    }
-  }, [timeLeft, onStartVote]);
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
-
-  const onTimerStart = () => {
-    // Prevent multiple timers
+  const startInterval = () => {
     if (timerRef.current) return;
-
-    startAudioRef.current?.play();
-
-    setTimeLeft(timerDuration);
 
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -88,14 +54,72 @@ export function DiscussionView({
           tickAudioRef.current?.play();
         }
 
-        if (prev <= 0) {
+        if (next <= 0) {
           clearInterval(timerRef.current!);
           timerRef.current = null;
           return 0;
         }
+
         return next;
       });
     }, 1000);
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
+  // Pause when leaving discussion
+  useEffect(() => {
+    if (state !== "discussion" && timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, [state]);
+
+  // Resume timer if returning to discussion
+  useEffect(() => {
+    if (
+      state === "discussion" &&
+      timeLeft !== null &&
+      timeLeft > 0 &&
+      !timerRef.current
+    ) {
+      startInterval();
+    }
+  }, [state, timeLeft]);
+
+  // Handle timer reaching zero
+  useEffect(() => {
+    if (timeLeft === 0) {
+      if (endAudioRef.current) {
+        const audio = endAudioRef.current;
+        audio.currentTime = 0;
+
+        audio.play().then(() => {
+          audio.onended = onStartVote;
+        });
+      } else {
+        onStartVote();
+      }
+    }
+  }, [timeLeft, onStartVote]);
+
+  const onTimerStart = () => {
+    // prevent duplicates
+    if (timerRef.current) return;
+
+    startAudioRef.current?.play();
+
+    setTimeLeft((prev) => prev ?? timerDuration);
+
+    startInterval();
   };
 
   if (!startingPlayer) {
@@ -148,21 +172,27 @@ export function DiscussionView({
               {t("discussionView.goToVote")}
             </button>
 
-            <button
-              onClick={onTimerStart}
-              disabled={timeLeft !== null}
-              className={`w-full mt-4 rounded-lg py-2 transition
-                ${
-                  timeLeft !== null
-                    ? "bg-zinc-700 cursor-not-allowed opacity-60"
-                    : "bg-zinc-600 hover:bg-zinc-500"
-                }
-              `}
-            >
-              {timeLeft !== null
-                ? t("discussionView.timerRunning")
-                : t("discussionView.timer")}
-            </button>
+            {timeLeft === null && (
+              <div className="flex gap-3">
+                <button
+                  onClick={onTimerStart}
+                  className="flex-[3] w-full mt-4 rounded-lg py-2 transition bg-zinc-600 hover:bg-zinc-500"
+                >
+                  {"▶️ "}
+                  {t("discussionView.startTimer", {
+                    formattedTime: formatTime(timerDuration),
+                  })}
+                </button>
+
+                <button
+                  onClick={() => setState("timerEdit")}
+                  className="flex-[1] w-full mt-4 rounded-lg py-2 transition bg-zinc-600 hover:bg-zinc-500"
+                >
+                  {"⚙️ "}
+                  {t("discussionView.timerEdit")}
+                </button>
+              </div>
+            )}
 
             {timeLeft !== null && (
               <div className="mt-4 text-center">
@@ -197,7 +227,7 @@ export function DiscussionView({
               </button>
 
               <button
-                onClick={onForgotWord}
+                onClick={() => setState("forgotWord")}
                 className="w-full rounded-lg bg-teal-700 hover:bg-teal-600 py-2"
               >
                 {t("discussionView.IForgotMyWord")}
@@ -209,5 +239,25 @@ export function DiscussionView({
 
     case "rules":
       return <RulesView onClose={() => setState("discussion")} />;
+
+    case "timerEdit":
+      return (
+        <TimerEditorView
+          timerDuration={timerDuration}
+          onConfirm={(newTimerDuration) => {
+            setTimerDuration(newTimerDuration);
+            setState("discussion");
+          }}
+          onCancel={() => setState("discussion")}
+        />
+      );
+
+    case "forgotWord":
+      return (
+        <ForgotWordView
+          players={players}
+          onBackToDiscussion={() => setState("discussion")}
+        />
+      );
   }
 }

@@ -29,6 +29,7 @@
     "editRules": "Éditer les règles",
     "scoreboard": "Tableau des scores",
     "selectLanguage": "Sélectionner la langue",
+    "screenWakeLockNotice": "Le jeu maintiendra l'écran allumé pendant la partie.",
     "disclaimer": "Il s'agit d'un jeu de déduction non officiel qui n'est affilié à aucun titre commercial."
   },
   "rulesView": {
@@ -75,8 +76,7 @@
     "authenticWinPoints": "Points gagnés par les Authentiques",
     "maskWinPoints": "Points gagnés par les Masques",
     "chameleonWinPoints": "Points gagnés par le Caméléon",
-    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot",
-    "timerDuration": "Durée du minuteur (secondes)"
+    "chameleonCanGuessTheWord": "Le Caméléon peut deviner le mot"
   },
   "playerSelectionView": {
     "gameSetup": "Configuration du jeu"
@@ -105,10 +105,14 @@
     "discussionInstructions1": "Chaque joueur doit dire <bold>un mot</bold>, en commençant par <bold>{{startingPlayerName}}</bold> et en continuant dans le sens des aiguilles d'une montre, jusqu'à ce que chacun ait dit un mot.",
     "discussionInstructions2": "Une fois que tout le monde a terminé, débattez de qui, selon vous, sont les <bold>Masques</bold> ou le <bold>Caméléon</bold>, puis passez à la phase de vote.",
     "goToVote": "Passer au vote",
-    "timer": "Minuteur de discussion",
-    "timerRunning": "Minuteur en cours ...",
+    "startTimer": "Démarrer minuteur ({{formattedTime}})",
     "timeRemaining": "Temps restant :",
+    "timerEdit": "Éditer",
     "IForgotMyWord": "J'ai oublié mon mot"
+  },
+  "timerEditorView": {
+    "timerEdit": "Édition du minuteur",
+    "timerDuration": "Durée du minuteur (secondes)"
   },
   "forgotWordView": {
     "forgotWord": "Mot oublié",

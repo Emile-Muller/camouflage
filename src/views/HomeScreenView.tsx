@@ -41,14 +41,14 @@ export function HomeScreenView({
             onClick={onRules}
             className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2 text-md"
           >
-          {t("howToPlay")}
+            {t("howToPlay")}
           </button>
 
           <button
-          onClick={onEditRules}
-          className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2 text-md"
+            onClick={onEditRules}
+            className="w-full rounded-lg bg-zinc-600 hover:bg-zinc-500 py-2 text-md"
           >
-          {t("homeScreenView.editRules")}
+            {t("homeScreenView.editRules")}
           </button>
         </div>
 
@@ -90,6 +90,10 @@ export function HomeScreenView({
             </button>
           ))}
         </div>
+
+        <p className="text-xs text-zinc-500">
+          {t("homeScreenView.screenWakeLockNotice")}
+        </p>
 
         <p className="text-xs text-zinc-500">
           {t("homeScreenView.disclaimer")}
