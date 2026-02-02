@@ -16,6 +16,7 @@ import type {
 import { RulesEditorView } from "./RulesEditorView";
 import i18n from "i18next";
 import { RulesView } from "./RulesView";
+import { useWakeLockWhilePlaying } from "../wakeLock/useWakeLockWhilePlaying";
 
 type SessionState = "home" | "rules" | "rulesEditor" | "setup" | "playing";
 
@@ -114,6 +115,8 @@ export function GameSessionView() {
   // -------------------------
   // Rendering
   // -------------------------
+  useWakeLockWhilePlaying(state === "playing");
+
   switch (state) {
     case "home":
       return (

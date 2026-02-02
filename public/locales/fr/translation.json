@@ -29,6 +29,7 @@
     "editRules": "Éditer les règles",
     "scoreboard": "Tableau des scores",
     "selectLanguage": "Sélectionner la langue",
+    "screenWakeLockNotice": "Le jeu maintiendra l'écran allumé pendant la partie.",
     "disclaimer": "Il s'agit d'un jeu de déduction non officiel qui n'est affilié à aucun titre commercial."
   },
   "rulesView": {
