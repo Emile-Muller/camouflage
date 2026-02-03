@@ -49,20 +49,24 @@ The interface is intentionally simple and touch-friendly, so it works smoothly i
 
 ## 🛠️ Tech Stack
 
-This project is built with a modern, lightweight frontend stack:
+This project uses a modern, lightweight frontend stack focused on performance, maintainability, and developer experience.
 
 ### Frontend
 
-- **React** — UI framework
-- **TypeScript** — type safety and better DX
-- **Vite** — fast dev server and build tooling
-- **Tailwind CSS** — utility-first styling for rapid UI development
+- **React** — component-based UI
+- **TypeScript** — static typing for safer, more maintainable code
+- **Vite** — fast development server and optimized builds
+- **Tailwind CSS** — utility-first styling for rapid UI iteration
 
-### Tooling & Quality
+### Internationalization
 
+- **i18n** — handles translations and multilingual support (English & French)
+
+### Tooling & Code Quality
+
+- **ESLint** — linting and code quality enforcement
 - **Prettier** — consistent code formatting
-- **ESLint** — code quality and linting
-- **Husky** — Git hooks
+- **Husky** — Git hooks for automated checks
 - **lint-staged** — runs linters on staged files before commits
 
 This setup keeps the codebase clean, fast, and easy to contribute to.
