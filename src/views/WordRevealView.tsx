@@ -177,7 +177,9 @@ export function WordRevealView({
           <div className="space-y-4">
             {currentPlayer.role === "chameleon" ? (
               <div className="bg-zinc-600 rounded-lg p-8 text-center">
-                <p className="text-3xl font-bold">{t("chameleon")}</p>
+                <p className="text-3xl font-bold">
+                  {t("wordRevealView.youAreTheChameleon")}
+                </p>
                 <p className="text-sm mt-4 opacity-80">
                   {t("wordRevealView.youDontKnowTheWord")}
                 </p>
