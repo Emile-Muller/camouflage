@@ -122,15 +122,19 @@ export function ForgotWordView({
             {showingWord && (
               <div className="space-y-4">
                 {selectedPlayer.role === "chameleon" ? (
-                  <div className="bg-yellow-600 rounded-lg p-8 text-center">
-                    <p className="text-3xl font-bold">{t("chameleon")}</p>
+                  <div className="bg-zinc-600 rounded-lg p-8 text-center">
+                    <p className="text-3xl font-bold">
+                      {t("wordRevealView.youAreTheChameleon")}
+                    </p>
                     <p className="text-sm mt-4 opacity-80">
                       {t("wordRevealView.youDontKnowTheWord")}
                     </p>
                   </div>
                 ) : (
                   <div className="bg-zinc-600 rounded-lg p-8 text-center">
-                    <p className="text-sm opacity-80">{t("wordRevealView.yourWord")}</p>
+                    <p className="text-sm opacity-80">
+                      {t("wordRevealView.yourWord")}
+                    </p>
                     <p className="text-4xl font-bold mt-4">
                       {upperFirst(selectedPlayer.word)}
                     </p>
